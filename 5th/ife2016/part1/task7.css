@@ -1,0 +1,387 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 1.5vw;
+}
+ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+a:visited {
+    color: black;
+}
+/****************************************/
+.head {
+    position: relative;
+    font-size: 1.1rem;
+}
+.head span {
+    display: inline-block;
+    font-size: 1.1rem;
+    margin: 10px 0 0 50px;
+}
+.head span p{
+    display: inline;
+    font-size: 1.5rem;
+    position: relative;
+    top: -5px;
+}
+.headUl {
+    position: absolute;
+    top: 10px;
+    right: 5%;
+    color: black;
+}
+.headUl li {
+    display: inline-block;
+}
+.headUl a {
+    text-align: center;
+    font-size: 0.7rem;
+    padding: 3px 15px;
+    transition: all .5s;
+}
+.headUl li:first-child a {
+    color: red;
+    border-bottom: 5px red solid;
+}
+.headUl a:hover {
+    transition:all .3s;
+    border-bottom: 5px red solid;
+}
+.headUl li:last-child a {
+    color: red;
+}
+/****************************************/
+.div1 {
+    background: url(./img/task07-background01.png) no-repeat;
+    background-size: 100% auto;
+    height: 35vw;
+}
+.div1-1 {
+    position: absolute;
+    left: 13%;
+    color: white;
+}
+.div1-1 h1 {
+    margin: 5vw 0;
+    font-size: 5vw;
+}
+.div1-1 p:first-of-type {
+    margin: 2.5vw 0;
+    font-size: 1.2rem;
+}
+.div1-1 p:last-of-type {
+    margin: 1vw 0;
+}
+.div1-1 input {
+    background: #e74f4d;
+    border: none;
+    padding: 5px 30px;
+    color: white;
+    font-size: 1.8rem;
+    transition: all .5s;
+}
+.div1-1 input:hover {
+    transition: all .5s;
+    border-radius: 1.3rem;
+}
+/****************************************/
+.div2 {
+    background: url(./img/task07-background02.png) no-repeat;
+    background-size: 100%;
+}
+.div2 ul {
+    display: flex;
+}
+.div2 li {
+    display: inline-block;
+    text-align: center;
+    padding: 2vw;
+    margin: 4vw 2vw;
+    color: rgba(128, 128, 128, .5);
+}
+.div2 p {
+    margin-top: 1vw;
+    font-size: 1vw;
+}
+/****************************************/
+.div3 {
+    background: rgba(128, 128, 128, .2);
+    height: 25vw;
+    text-align: center;
+}
+.div3 img {
+    width: 7vw;
+    margin-top: 7vw;
+}
+.div3 p {
+    margin-top: 2vw;
+    color: rgba(128, 128, 128);
+    font-size: 1.8rem;
+}
+/****************************************/
+.div4 {
+    background: url(./img/task07-background04.png) no-repeat;
+    background-size: 100% auto;
+    height: 25vw;
+    text-align: center;
+    color: white;
+}
+.div4 h1 {
+    padding: 2vw 0;
+    font-size: 1.3rem;
+}
+.div4 form {
+    margin: 3vw 0;
+}
+.div4 select,
+.div4 input {
+    color:rgba(128, 128, 128, 0.6);
+    width: 15vw;
+    height: 4vw;
+    font-size: .8rem;
+}
+.div4 input {
+    background: #e74f4d;
+    border: none;
+    color: white;
+}
+/****************************************/
+.div5 {
+    background: rgba(128, 128, 128, .1);
+}
+.div5 ul {
+    display: flex;
+    justify-content: space-around;
+}
+.div5 li {
+    display: inline-block;
+    text-align: center;
+    margin-top: 5vw;
+}
+.div5 img {
+    border: 1vw solid white;
+    width:70%;
+}
+.div5 h1 {
+    margin: 1vw 0;
+    font-size: 1.8vw;
+}
+.div5 p {
+    color: rgba(128, 128, 128, .6);
+    margin-bottom: 1vw;
+}
+/****************************************/
+.div6 {
+    height: 40vw;
+    display: flex;
+}
+.div6-1 {
+    background: url(./img/task07-background06.png) no-repeat;
+    background-size: 100%;
+    flex: 2;
+    color: white;
+    text-align: center;
+}
+.div6-1 span {
+    display: block;
+}
+.div6-1 span:first-child {
+    font-size: 2.5vw;
+    padding: 2vw 0;
+}
+.div6-1 p {
+    font-size: 7vw;
+    padding: 2vw 0;
+}
+.div6-1 span {
+    font-size: 1vw;
+    padding: 3vw;
+}
+.div6-1 span:last-child {
+    padding-top: 5vw;
+}
+.div6-2 {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    text-align: center;
+}
+.div6-2-1 p {
+    padding: 1vw 3vw;
+    font-weight: bold;
+}
+.div6-2-1 p span {
+    padding-left: 4vw;
+    color: red;
+}
+.div6-2-1 p:last-of-type{
+    text-align: left;
+    color: grey;
+    font-size: .9vw;
+    font-weight: 400;
+}
+.div6-2-1 input {
+    margin: 2.5vw;
+    background: white;
+    border: 2px red solid;
+    color: red;
+    padding: 1vw 3vw;
+}
+/****************************************/
+.div7 ul{
+    display: flex;
+}
+.div7 li{
+    flex: 1;
+    height: 35vw;
+    text-align: center;
+}
+.div7 li:last-child{
+    background: url(./img/task07-background07.png) no-repeat;
+    background-size: 100% auto;
+}
+.div7 li:first-child {
+    color: white;
+    background-color: rgba(255, 0, 0, .6);
+}
+.div7 li p:first-child {
+    padding-top: 11vw;
+}
+.div7 input {
+    margin-top: 14vw;
+    padding: 1vw 2vw;
+    background: none;
+}
+.div7 li:first-of-type input {
+    border: 1px white solid;
+    color: white;
+}
+.div7 li:nth-of-type(2) input {
+    border: 1px rgba(255, 0, 0, .6) solid;
+    color: rgba(255, 0, 0, .6);
+}
+/****************************************/
+.div8 p {
+    text-align: center;
+    padding-top: 2vw;
+}
+.div8 p span{
+    display: block;
+    color: grey;
+    font-size: .8vw;
+}
+.div8 span:first-of-type {
+    font-size: 2.5vw;
+    color: black;
+}
+.div8-1 {
+    display: flex;
+}
+.div8-1 div {
+    flex: 1;
+    padding: 2vw 0;
+    font-size: 1vw;
+}
+.div8-1 div:first-of-type {
+    padding: 4vw 10vw;
+}
+.div8-1-1 h1 {
+    padding-top: 3vw;
+}
+.div8-1 div p{
+    text-align: left;
+    color: grey;
+    font-size: .8vw;
+}
+.div8-1 div a {
+    display: block;
+    text-align: right;
+    transition: all .5s;
+    font-size: .7vw;
+}
+.div8-1 div a:hover {
+    transition: all .5s;
+    background-color: red;
+    color: white;
+}
+.div8-1 div img {
+    padding-right: 1vw;
+}
+.div8-1-2 li {
+    width: 80%;
+    background-color: rgba(128, 128, 128, .3);
+    margin: 1vw 0;
+    padding: 1vw 0;
+    color: grey;
+}
+.div8-1-2 input {
+    background: none;
+    border: none;
+}
+.div8-1-2 textarea {
+    background: rgba(128, 128, 128, .3);
+}
+.div8-1-2 ul>input {
+    display: block;
+    background: rgba(128, 128, 128, .3);
+    padding: 1vw 13vw;
+    transition: all .5s;
+}
+.div8-1-2 ul>input:hover {
+    transition: all .5s;
+    background: red;
+    color: white;
+}
+/****************************************/
+.foot {
+    background-color: rgba(0, 0, 0, .8);
+    color: white;
+    text-align: center;
+}
+.foot p {
+    font-size: .8vw;
+    padding: 1vw 0;
+}
+.foot p:first-of-type {
+    padding-top: 5vw;
+}
+.foot input {
+    border: none;
+    height: 4vw;
+    padding: 0 2vw;
+    background-color: grey;
+    color: white;
+}
+.foot input:first-of-type {
+    border: 1px solid black;
+    padding: 0 1vw;
+    width: 30vw;
+    background: white;
+    color: black;
+}
+.foot ul{
+    padding: 2vw 0;
+}
+.foot li {
+    display: inline-block;
+    margin: 0 2vw;
+}
+.foot-1 {
+    padding: 1.4vw;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+.foot-1 span {
+    padding-left: 5%;
+    font-size: .9vw;
+}
+.foot-1 a {
+    margin-left: 80%;
+    color: white;
+    font-size: .9vw;
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>task38</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .table {
+        margin: 5vw;
+        margin-bottom: 10vw;
+        border-spacing: 0;
+        border: none;
+        border-collapse: collapse;
+    }
+
+    .table tr:first-of-type td {
+        background-color: rgba(128, 128, 128);
+    }
+
+    .table td {
+        width: 20vw;
+        height: 5vw;
+        text-align: center;
+        background-color: pink;
+        position: relative;
+        border: 1px solid black;
+    }
+
+    .table td:hover {
+        background-color: white;
+    }
+
+    .table span {
+        display: block;
+        position: absolute;
+        height: 50%;
+        width: 20%;
+        padding: 7% 0;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        user-select: none;
+    }
+</style>
+
+<body>
+    <div id="root"></div>
+    <script type="text/javascript">
+        class table {
+            constructor(obj, id) {
+                this.id = id;
+                this.obj = obj;
+            }
+            //obj为传入数据 id为table的id
+            set(obj, id) {
+                var table = document.createElement('table');
+                table.setAttribute('id', id);
+                table.classList.add('table');
+                var keys = Object.keys(obj);
+                var arr = keys.filter(item => {
+                    return !(item == 'name');
+                });
+                arr.unshift('name');
+                for (var i of arr) {
+                    var tr = document.createElement('tr');
+                    for (var j = 0; j < obj[i].length + 1; j++) {
+                        var td = document.createElement('td');
+                        if (j == 0) {
+                            td.innerHTML = i;
+                        } else {
+                            td.innerHTML = obj[i][j - 1];
+                            if (i === 'name') {
+                                var span = document.createElement('span');
+                                span.innerHTML = '↓';
+                                td.appendChild(span);
+                            }
+                        }
+                        tr.appendChild(td);
+                    }
+                    table.appendChild(tr);
+                }
+                document.getElementById('root').appendChild(table);
+            }
+            //bool为true代表冻结表头 false反之
+            listener(id, bool) {
+                var table = document.getElementById(id);
+                var span = table.querySelectorAll('span');
+                span.forEach((item, index) => {
+                    item.onclick = () => {
+                        var tr2 = Array.from(table.querySelectorAll('tr'));
+                        var head = tr2.shift();
+                        tr2.sort((a, b) => {
+                            var numA = a.getElementsByTagName('td')[index + 1].innerHTML,
+                                numB = b.getElementsByTagName('td')[index + 1].innerHTML;
+                            if (item.innerHTML == '↓') {
+                                return numB * 1 - numA * 1;
+                            } else {
+                                return numA * 1 - numB * 1;
+                            }
+                        });
+                        table.innerHTML = '';
+                        table.appendChild(head);
+                        tr2.forEach(item => {
+                            table.appendChild(item);
+                        })
+                        item.innerHTML == '↓' ? item.innerHTML = '↑' : item.innerHTML = '↓';
+                    }
+                });
+                if (bool) {
+                    document.addEventListener('scroll', () => {
+                        var scroTop = document.documentElement.scrollTop || document.body.scrollTop;
+                        var tr = table.querySelector('tr');
+                        if (scroTop > table.offsetTop - 10 && scroTop < table.offsetTop + table.offsetHeight + 10) {
+                            tr.style.zIndex = 99;
+                            tr.style.position = 'fixed';
+                            tr.style.top = 0;
+                        } else {
+                            tr.style.position = 'relative';
+                        }
+                    })
+                }
+            }
+        }
+        var a = new table({
+            'name': ['a', 'b', 'c'],
+            '1': ['10', '80', '60'],
+            '2': ['40', '20', '90'],
+            '3': ['70', '50', '30']
+        }, 'table');
+        a.set(a.obj, a.id);
+        a.listener(a.id,true);
+        var b = new table({
+            'name': ['a', 'b', 'c'],
+            '1': ['10', '80', '60'],
+            '2': ['40', '20', '90'],
+            '3': ['70', '50', '30']
+        }, 'table2');
+        b.set(b.obj, b.id);
+        b.listener(b.id);
+        var c = new table({
+            'name': ['a', 'b', 'c'],
+            '1': ['10', '80', '60'],
+            '2': ['40', '20', '90'],
+            '3': ['70', '50', '30']
+        }, 'table3');
+        c.set(c.obj, c.id);
+        c.listener(c.id);
+    </script>
+</body>
+
+</html>

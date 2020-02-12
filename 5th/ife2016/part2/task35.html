@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>task35</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #body {
+            display: flex;
+            flex-flow: wrap;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid grey;
+            text-align: center;
+        }
+
+        .td {
+            border: none;
+        }
+
+        #icon {
+            background: url('task35.jpg') no-repeat;
+            position: absolute;
+            background-size: auto;
+            width: 50px;
+            height: 50px;
+            transition: all 1s;
+        }
+
+        #controler {
+            margin-top: 30px;
+            margin-left: 10px;
+            height: 530px;
+            text-align: center;
+        }
+
+        #count {
+            margin: 0;
+            background-color: rgba(128, 128, 128, .1);
+            width: 50px;
+            padding-inline-start: 0px;
+            font-size: .9rem;
+        }
+
+        #count li {
+            list-style: none;
+            padding: 1px 0;
+            height: 15px;
+        }
+
+        #textarea {
+            display: flex;
+        }
+
+        #order {
+            line-height: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="body">
+        <table id="table"></table>
+        <div id="icon"></div>
+        <div id="controler">
+            <div id="input">
+                <input type="button" value="EXECUTE">
+                <input type="button" value="CLEAR">
+                <input type="button" value="RESET">
+            </div>
+            <div id="textarea">
+                <ul id="count">
+                    <li>1</li>
+                </ul>
+                <textarea name="" id="order" cols="30" rows="30"></textarea>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var table = document.querySelector('#table');
+        for (let i = 0; i < 10; i++) {
+            var tr = document.createElement('tr');
+            for (let j = 0; j < 10; j++) {
+                var td = document.createElement('td');
+                if (i === 0) {
+                    j === 0 ? [] : td.innerHTML = j;
+                    td.classList.add('td');
+                } else {
+                    if (j === 0) {
+                        td.innerHTML = i;
+                        td.classList.add('td');
+                    }
+                }
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+        var icon = document.querySelector('#icon');
+        var execute = document.querySelector('input[value=EXECUTE]');
+        var clear = document.querySelector('input[value=CLEAR]');
+        var reset = document.querySelector('input[value=RESET]');
+        //forward：0上90右180下270左
+        var forward = 0;
+        var countLeft = 54,
+            countTop = 54;
+        icon.style.top = '54px';
+        icon.style.left = '54px';
+        var textarea = document.querySelector('textarea');
+        const update = () => {
+            var arr = textarea.value.split(/\r*\n/);
+            var ul = document.querySelector('#count');
+            var li = '';
+            for (let i = 1; i < arr.length + 1; i++) {
+                li += `<li>${i}</li>`;
+            }
+            ul.innerHTML = li;
+        }
+
+        textarea.oninput = () => update();
+
+        clear.onclick = () => {
+            textarea.value = '';
+            update();
+        }
+        reset.onclick = () => {
+            location.reload();
+        }
+        const changeForward = (value) => {
+            switch (value) {
+                case 'TUN LEF': {
+                    forward -= 90;
+                    thing(forward);
+                }
+                    break;
+                case 'TUN RIG': {
+                    forward += 90;
+                    thing(forward);
+                }
+                    break;
+                case 'TUN BAC': {
+                    forward += 180;
+                    thing(forward);
+                }
+                    break;
+                case 'LEF': {
+                    forward = 270;
+                    thing(forward);
+                }
+                    break;
+                case 'TOP': {
+                    forward = 0;
+                    thing(forward);
+                }
+                    break;
+                case 'RIG': {
+                    forward = 90;
+                    thing(forward);
+                }
+                    break;
+                case 'BOT': {
+                    forward = 180;
+                    thing(forward);
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+        const thing = (value) => {
+            icon.style.transform = `rotate(${value}deg)`;
+        }
+        const move = (value) => {
+            var iconLef = countLeft;
+            var iconTop = countTop;
+            switch (value) {
+                case 0: {
+                    if (iconTop === 54) return false;
+                    countTop -= 53;
+                    icon.style.top = iconTop - 53 + 'px';
+                }
+                    break;
+                case 90: {
+                    if (iconLef === 478) return false;
+                    countLeft += 53;
+                    icon.style.left = iconLef + 53 + 'px';
+                }
+                    break;
+                case 180: {
+                    if (iconTop === 478) return false;
+                    countTop += 53;
+                    icon.style.top = iconTop + 53 + 'px';
+                }
+                    break;
+                case 270: {
+                    if (iconLef === 54) return false;
+                    countLeft -= 53;
+                    icon.style.left = iconLef - 53 + 'px';
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+        const render = (text) => {
+            var num = text.slice(-1);
+            var i = 1;
+            switch (text.slice(0, -2)) {
+                case 'GO':
+                    move(forward % 360);
+                    break;
+                case 'TUN LEF': {
+                    changeForward(text.value);
+                }
+                    break;
+                case 'TUN RIG': {
+                    changeForward(text.value);
+                }
+                    break;
+                case 'TUN BAC': {
+                    changeForward(text.value);
+                }
+                    break;
+                case 'TRA LEF': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(270);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'TRA TOP': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(0);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'TRA RIG': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(90);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'TRA BOT': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(180);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV LEF': {
+                    changeForward('LEF');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(270);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV TOP': {
+                    changeForward('TOP');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(0);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV RIG': {
+                    changeForward('RIG');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(90);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV BOT': {
+                    changeForward('BOT');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(180);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                default: {
+                    var reg = /^(.\d|\d)s$/;
+                    if (reg.test(text.value)) {
+                        icon.style.transition = `all ${text.value.slice(0, -1)}s`;
+                    }
+                }
+                    break;
+            }
+        }
+        const changeLi = (i) => {
+            var li = document.querySelectorAll('#count li');
+            li[i].style.backgroundColor = 'green';
+        }
+        execute.onclick = () => {
+            var arr = textarea.value.split(/\r*\n/);
+            var count = 0;
+            arr.forEach((item, index) => {
+                var str = item.match(/[A-Za-z]{3}\s[A-Za-z]{3}\s\d/g);
+                if (!str) {
+                    str = item.match(/[A-Za-z]{3}\s[A-Za-z]{3}/g);
+                    str[0] = str[0] + ' 1';
+                }
+                var num = str[0].slice(-1) * 1
+                setTimeout(() => {
+                    changeLi(index);
+                    render(str[0].toUpperCase());
+                }, count * 1000);
+                count += str[0].slice(-1) * 1 + 1;
+            });
+        }
+        //第一版 完成于2019.12.5
+    </script>
+
+</body>
+
+</html>

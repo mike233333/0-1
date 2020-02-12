@@ -1,0 +1,600 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body, html {
+    width: 100%;
+    height: 100%;
+}
+li {
+    list-style: none;
+}
+#header {
+    width: 100%;
+    min-width: 980px;
+}
+#header1 {
+    background-color: purple;
+}
+#header1 > a {
+    position: absolute;
+    top: 46px;
+    right: 10px;
+    z-index: 50;
+}
+#header2 {
+    background-image: url(../images/banner-bg.jpg);
+    background-size: 100% 100%;
+    width: 100%;
+    min-width: 980px;
+    background-repeat: no-repeat;
+    height: 400px;
+}
+#header2-1 {
+    width: 980px;
+    height: 400px;
+    margin: 0 auto;
+}
+#header1-1 {
+    position: relative;
+    width: 980px;
+    height: 80px;
+    margin: 0 auto;
+    color: white;
+    background-color: purple;
+    z-index: 99;
+}
+#name {
+    position: relative;
+    float: left;
+    top: 40%;
+    font-size: 30px;
+}
+#button {
+    position: relative;
+    float: right;
+    font-size: 14px;
+    margin-bottom: 5px;
+    top: 57px;
+}
+#button li {
+    display: inline;
+    margin-left: 28px;
+}
+a {
+    text-decoration: none;
+    outline: none;
+    color: white;
+}
+#title {
+    background-color:white;
+    background: linear-gradient(rgba(255, 255, 255, .5),rgba(255, 255, 255, .1));
+    position: relative;
+    width: 300px;
+    height: 100px;
+    top: 260px;
+    left: 660px;
+    padding: 10px 10px 30px 10px;
+}
+#title h1 {
+    text-align: right;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+#title p {
+    font-size: 12px;
+}
+#body {
+    position: relative;
+    width: 100%;
+    min-width: 980px;
+    background-color: rgba(128, 128, 128, .2);
+}
+#body1 {
+    width: 980px;
+    height: 500px;
+    margin: 0 auto;
+}
+.div1 {
+    margin-top: 10px;
+    background-color: rgba(128, 128, 128, 0.5);
+    width: 320px;
+    min-height: 360px;
+    float: left;
+}
+.div1-1 {
+    margin-left: 10px;
+}
+.div1 img {
+    width: 300px;
+    height: 180px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.div1 p {
+    font-size: 12px;
+    line-height: 170%;
+    margin: 15px 30px 25px 30px;
+}
+#body2 {
+    width: 980px;
+    height: 500px;
+    margin: 0 auto;
+}
+#body2 img{
+    position: relative;
+    height: 160px;
+    width: 160px;
+    left: 50%;
+    margin-left: -80px;
+    top: -50px;
+}
+#hello {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#word {
+    font-size: 14px;
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+#foot {
+    background-color: black;
+    color: white;
+    height: 400px;
+}
+nav {
+    height: 30px;
+    border-bottom: 1px gray solid;
+}
+nav ul {
+    position: relative;
+    width: 980px;
+    margin: 0 auto;
+    text-align: center;
+    top: 3px;
+}
+nav li {
+    display: inline;
+    margin: 0 10px;
+    font-size: 14px;
+}
+#foot > ul {
+    position: relative;
+    top: 50px;
+    width: 980px;
+    margin: 0 auto;
+    font-size: 14px;
+    color: gray;
+}
+.li1 {
+    display: inline-table;
+    margin: 0 46px;
+    width: 100px;
+    text-align: center;
+}
+.ul1 {
+    position: relative;
+    top: 50px;
+    font-size: 14px;
+}
+#info {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    width: 980px;
+    top: 187px;
+}
+#info p {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+#header2b {
+    background-color: rgba(128, 128, 128, .5);
+    min-height: 1200px;
+    width:100%;
+    min-width: 980px;
+    padding-top: 5px;
+}
+#header2b-1 {
+    position: relative;
+    width: 980px;
+    margin: 0 auto;
+}
+#header2b-1-1 {
+    width: 280px;
+    min-height: 450px;
+    float: right;
+}
+#header2b-1-2 {
+    width: 700px;
+    min-height: 900px;
+}
+#search {
+    position: relative;
+    width: 270px;
+    height: 100px;
+    margin: 5px;
+    background-color: white;
+    margin-top: 0;
+}
+.search {
+    position: relative;
+    width: 222px;
+    height: 42px;
+    margin: 0 auto;
+    top: 25px;
+}
+.search input[type=text] {
+    padding-left: 5px;
+    width: 165px;
+    height: 40px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+}
+.search input[type=text]:focus {
+    border: 1px solid #317ef3;
+}
+.search input[type=button] {
+    width: 50px;
+    height: 42px;
+    position: absolute;
+    background: #317ef3;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid #317ef3;
+}
+#choose a{
+    position: relative;
+    width: 265px;
+    height: 50px;
+    margin: 5px;
+    background-color: white;
+    color: black;
+    display: block;
+    border-left: 5px solid purple;
+    opacity: 0.5;
+}
+#choose span {
+    position: relative;
+    top: 14px;
+    left: 30px;
+}
+#choose a:hover {
+    opacity: 1;
+}
+#choose a:focus  {
+    opacity: 1;
+}
+#date {
+    position: relative;
+    width: 270px;
+    margin: 5px;
+    background-color: white;
+    color: black;
+}
+#lef {
+    color: purple;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    left: 10px;
+}
+#rig {
+    color: purple;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    left: 225px;
+}
+#date span {
+    position: absolute;
+    width: 100px;
+    left: 85px;
+    top: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+#date tr {
+    display: block;
+    margin: 5px auto;
+}
+#date th {
+    width: 36px;
+    font-weight: 400;
+}
+#now {
+    background-color: purple;
+    color: white;
+}
+#words {
+    position: relative;
+    width: 270px;
+    margin: 5px;
+    background-color: white;
+    color: black; 
+    min-height: 120px;
+}
+#words p {
+    position: relative;
+    margin-left: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+#words span {
+    font-size: 16px;
+    margin: 10px;
+    color: purple;
+}
+.passage {
+    position: relative;
+    background-color: white;
+    width: 675px;
+    height: 300px;
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 10px;
+}
+.passage h1 {
+    font-size: 16px;
+    color: purple;
+    margin: 10px 0;
+}
+.passage h2 {
+    font-size: 12px;
+    margin: 5px 0;
+}
+.passage span:first-of-type {
+    display: block;
+    background-color: purple;
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    top: 40px;
+    left: -50px;
+}
+.passage span:last-of-type {
+    display: block;
+    background-color: rgb(206, 152, 206);
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    top: 70px;
+    left: -50px;
+}
+.passage p {
+    font-size: 13px;
+    line-height: 20px;
+    margin-top: 20px;
+}
+.admin {
+    position: relative;
+    font-size: 12px;
+    opacity: .7;
+    top: 80px;
+    left: 530px;
+}
+#changeP {
+    margin-top: 10px;
+    text-align: center;
+}
+.a1 {
+    background-color: white;
+    color: black;
+    padding: 5px 10px;
+}
+.a1:hover,.a1:active {
+    background-color: purple;
+    color: white;
+}
+#tab {
+    position: relative;
+    margin-top: 80px;
+    top: -40px;
+    font-size: 1px;
+}
+#tab a {
+    position: relative;
+    color: black;
+    padding: 15px 20px 20px 20px;
+    font-size: 14px;
+    border-top: 3px solid rgba(0, 0, 0, .5);
+    background-color: white;
+}
+#tab a:hover {
+    border-top: 3px solid black;
+}
+#pic {
+    position: relative;
+    top: -20px;
+    column-width: 220px;
+    column-count: auto;
+    column-gap: 5px;
+    padding-top: 10px;
+    background-color: rgba(255, 255, 255, .45);
+}
+.smallFlow {
+    background-color: purple;
+    width: 220px;
+    margin: 5px;
+}
+.smallFlow img {
+    width: 220px;
+    height: 90px;
+}
+.smallFlow h1 {
+    font-size: 16px;
+}
+.smallFlow p {
+    font-size: 14px;
+}
+#popularity {
+    background-color: white;
+    position: relative;
+    width: 270px;
+    margin: 5px;
+}
+#popularity p {
+    display: block;
+    text-align: center;
+    width: 100px;
+    margin: 5px auto;
+    margin-bottom: 10px;
+}
+.level {
+    position: relative;
+}
+.level::before,
+.level::after {
+    content: "";
+    position: absolute;
+    left: 30px;
+    width: 200px;
+    height: 20px;
+} 
+.level::before {
+    border: 1px solid purple;
+    height: 18px;
+}
+.level::after {
+    background-image: linear-gradient(to right,purple, purple);
+    background-repeat: no-repeat;
+    background-size: 90%;
+}
+.level.chart2::after {
+    background-image: linear-gradient(to right,purple, purple);
+    background-repeat: no-repeat;
+    background-size: 70%;
+}
+.level.chart3::after {
+    background-image: linear-gradient(to right,purple, purple);
+    background-repeat: no-repeat;
+    background-size: 50%;
+}
+.level.chart4::after {
+    background-image: linear-gradient(to right,purple, purple);
+    background-repeat: no-repeat;
+    background-size: 30%;
+}
+.level.chart5::after {
+    background-image: linear-gradient(to right,purple, purple);
+    background-repeat: no-repeat;
+    background-size: 10%;
+}
+#more {
+    background-color: rgba(255, 255, 255, .45);
+    font-size: 14px;
+    height: 40px;
+    text-align: center;
+}
+#more a {
+    position: relative;
+    top: 10px;
+    color: black;
+}
+#body3 {
+    background-color: rgba(128, 128, 128, .5);
+    padding-top: 100px;
+    padding-bottom: 40px;
+}
+#body3-1 {
+    width: 980px;
+    height: 1200px;
+    margin: 0 auto;
+    background-color: white;
+}
+.img1 {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    left: 50%;
+    margin-left: -75px;
+    top: 130px;
+    z-index: 10;
+}
+.img2 {
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+    top: 450px;
+}
+.img3 {
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+    top: 650px;
+}
+.img4 {
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+    top: 920px;
+}
+.p1 {
+    position: relative;
+    display: block;
+    left: 30%;
+    top: 130px;
+    width: 100px;
+}
+.pp1 {
+    position: relative;
+    display: block;
+    left: 60%;
+    top: 110px;
+    max-width: 300px;
+}
+.p2 {
+    top: 220px;
+}
+.pp2 {
+    top: 190px;
+    line-height: 170%;
+}
+.p3 {
+    top: 340px;
+}
+.pp3 {
+    top: 300px;
+    line-height: 270%;
+}
+.p4 {
+    top: 320px;
+}
+.pp4 {
+    top: 280px;
+    line-height: 270%;
+}
+#body3 span {
+    position: relative;
+    display: block;
+    text-align: center;
+    width: 50px;
+    left: 50%;
+    margin-left: -25px;
+    border: 3px solid grey;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.span1 {
+    top: 185px;
+    z-index: 10;
+    background-color: white;
+}
+.span2 {
+    top: 205px;
+}
+.line::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 1215px;
+    background-image: linear-gradient(to right,rgba(128, 128, 128, .5), rgba(128, 128, 128, .5));
+    z-index: 5;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>task21</title>
+    <style>
+        li {
+            transition: all .5s;
+            background-color: none;
+        }
+
+        li:hover {
+            transition: all .5s;
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Tag:<input type="text"></p>
+    <ul></ul>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <br>
+    <input type="button" value="确认">
+    <input type="button" value="重置">
+    <script>
+        var finish = document.querySelector("input[value='确认']");
+        var reset = document.querySelector("input[value='重置']");
+        finish.onclick = () => {
+            var li = document.createElement('li');
+            var input = document.querySelector('input');
+            var ul = document.querySelector('ul');
+            var text = document.querySelector('textarea');
+            var content = '标签：' + input.value + ' 内容：' + text.value;
+            li.innerHTML = content
+            input.value = '';
+            text.value = '';
+            li.onclick = () => {
+                ul.removeChild(li);
+            }
+            li.onmouseover = () => {
+                li.innerHTML = '点击删除此项';
+            }
+            li.onmouseout = () => {
+                li.innerHTML = content;
+            }
+            ul.appendChild(li);
+        }
+        reset.onclick = () => {
+            var ul = document.querySelector('ul');
+            ul.innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>

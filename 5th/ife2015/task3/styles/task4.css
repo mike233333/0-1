@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html,body {
+    height:100%;
+    overflow: hidden;
+}
+li {
+    list-style: none;
+}
+#head {
+    position: absolute;
+    height: 21px;
+    width: 100%;
+    background-color: grey;
+    padding: 15px 0;
+    text-indent: 15px;
+}
+#body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 51px;
+    bottom: 46px;
+}
+.hover {
+    background-color: white;
+}
+.hover2 {
+    background-color: rgba(128, 128, 128, 0.2);
+}
+.hover3 {
+    background-color: white;
+    border: 1px solid black !important;
+}
+.donetrue {
+    color: green;
+    font-weight: bold;
+}
+#task {
+    min-width: 200px;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.5);
+    float: left;
+    border-right: 1px solid grey;
+}
+#task1 {
+    padding-top: 20px;
+    height: 100%;
+}
+#task1>p {
+    margin-bottom: 15px;
+    text-indent: 15px;
+}
+#foot {
+    position: absolute;
+    height: 46px;
+    width: 100%;
+    bottom: 0;
+}
+.foot {
+    border-top: 1px solid grey;
+    height: 30px;
+    width: 185px;
+    padding: 10px 0 5px 15px;
+    position: fixed;
+    cursor: pointer;
+}
+.foot2 {
+    left: 201px;
+    background-color: rgba(128, 128, 128, 0.5);
+}
+.foot:hover {
+    background-color: rgba(128, 128, 128, 0.3);
+}
+#list {
+    min-width: 200px;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.5);
+    float: left;
+    border-right: 1px solid grey;
+}
+#list1 ul {
+    padding: 14px;
+    border-bottom: 1px solid grey;
+} 
+#list1 li {
+    display: inline;
+    cursor: pointer;
+    border: 1px solid rgba(128, 128, 128, 0);
+    font-size: 14px;
+    padding: 0 3px;
+}
+#list1 li:hover {
+    background-color: white;
+    border: 1px solid;
+}
+#list2 {
+    height: 100%;
+    background-color: white;
+    font-size: 15px;
+}
+.ul1 {
+    cursor: pointer;
+    text-indent: 35px;
+}
+.ul1 li {
+    padding: 4px 0;
+}
+.ul1 li input {
+    opacity: 0;
+}
+.ul1 li:hover {
+    background-color: white;
+}
+.ul1 li:hover input {
+    opacity: 1;
+}
+.ul2 {
+    text-indent: 50px;
+    font-size: 15px;
+}
+.ul3 {
+    text-indent: 15px;
+    background-color: rgb(247, 240, 204);
+}
+.ul3 li {
+    padding: 4px 0;
+}
+.ul4 {
+    cursor: pointer;
+    background-color: white;
+    text-indent: 30px;
+}
+.ul4 li:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+}
+#contents {
+    display: none;
+}
+.content {
+    height: 100%;
+    margin-left: 402px;
+}
+.content1 {
+    height: 51px;
+    background-color: rgba(128, 128, 128, 0.5);
+    min-width: 300px;
+}
+.content1>span {
+    display: block;
+    padding: 13px;
+    float: left;
+}
+.content1>input {
+    float: right;
+    padding: 15px;
+}
+.content>p {
+    padding: 15px;
+    background-color: rgb(247, 240, 204);
+}
+#taskContent2,#taskContent {
+    padding: 15px;
+}
+.content input[type="text"] {
+    background: none;
+    border-style: none;
+    font-size: 18px;
+    font-weight: bold;
+}

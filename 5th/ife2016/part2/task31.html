@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task31 表单（三）联动</title>
+    <style type="text/css">
+        #social_group {
+            display: none;
+        }
+
+        #schoolList {
+            display: inline-block;
+        }
+
+        #beijing {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="radio">
+        <input type="radio" name="sele" id="student" checked>
+        <label for="student">在校生</label>
+        <input type="radio" name="sele" id="graduated">
+        <label for="graduated">毕业生</label>
+    </div>
+    <div id="stu">
+        <label for="">学校</label>
+        <select name="" id="province">
+            <option value="hunan">湖南</option>
+            <option value="hubei">湖北</option>
+        </select>
+        <select name="" id="hunan">
+            <option value="hunan1">湖南一学院</option>
+            <option value="hunan2">湖南二学院</option>
+        </select>
+        <select name="" id="hubei">
+            <option value="hubei1">湖北一学院</option>
+            <option value="hubei2">湖北二学院</option>
+        </select>
+    </div>
+    <div id="gra">
+        <label for="">公司</label>
+        <input type="text">
+    </div>
+    <script type="text/javascript">
+        const choose = (obj) => {
+            var stu = document.querySelector('#stu');
+            var gra = document.querySelector('#gra');
+            switch (obj.getAttribute('id')) {
+                case 'student': {
+                    stu.style.display = 'block';
+                    gra.style.display = 'none';
+                }
+                    break;
+                case 'graduated': {
+                    gra.style.display = 'block';
+                    stu.style.display = 'none';
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+        const change = (obj) => {
+            var hunan = document.querySelector('#hunan');
+            var hubei = document.querySelector('#hubei');
+            switch (obj.value) {
+                case 'hunan': {
+                    hunan.style.display = 'block';
+                    hubei.style.display = 'none';
+                }
+                    break;
+                case 'hubei': {
+                    hubei.style.display = 'block';
+                    hunan.style.display = 'none';
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+        var rad = document.querySelector('#radio');
+        var radio = document.querySelectorAll('input[type=radio]');
+        var province = document.querySelector('#province');
+        radio.forEach(item => {
+            item.onclick = () => choose(item);
+        });
+        province.onchange = () => {
+            change(event.target);
+        }
+        window.onload = () => {
+            choose(radio[0])
+            change(province);
+        }
+    </script>
+</body>
+
+</html>

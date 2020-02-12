@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>task50</title>
+    <link rel="stylesheet" href="./task50.css">
+</head>
+
+<body>
+    <div id='header'>
+        <span>问卷</span>
+        <ul id="navigater">
+            <li id="navi-home">首页</li>
+            <li id="navi-create">问卷新建</li>
+            <li id="navi-fill">问卷填写</li>
+            <li id="navi-data">问卷数据</li>
+            <li id="navi-list">问卷列表</li>
+        </ul>
+    </div>
+    <div id="home">
+        <div id="passage">
+            <h1>Welcome to visit here!</h1>
+            <p>it is a questionnaire manager</p>
+        </div>
+    </div>
+    <div id="create">
+        <div id="create-1">
+            <div id="create-title"><input type="text" placeholder="问卷标题"></div>
+            <div class="queAll">
+                <ul>
+                </ul>
+            </div>
+            <div id="create-controller">
+                <span id="controller-up">上移</span>
+                <span id="controller-down">下移</span>
+                <span id="controller-copy">复用</span>
+                <span id="controller-delete">删除</span>
+            </div>
+            <div id="create-add">
+                <ul>
+                    <li>单选题</li>
+                    <li>多选题</li>
+                    <li>文字题</li>
+                </ul>
+                <span>添加问题</span>
+            </div>
+            <div id="create-foot">
+                <div id="calendar">问卷截止日期<input id="date" type="text" placeholder="点击出现日历">
+                    <div id="calendarTable"></div>
+                </div>
+                <div>
+                    <input type="button" value="保存问卷">
+                    <input type="button" value="发布问卷">
+                </div>
+            </div>
+        </div>
+        <div id="create-2">
+            <p>点击按钮新建问卷</p>
+            <input type="button" value="新建问卷">
+        </div>
+    </div>
+    <div id="fill">
+        <div id="fill-1">
+            <div id="fill-title">
+                <p>问卷标题</p>
+            </div>
+            <div class='queFill'>
+                <ul>
+                </ul>
+            </div>
+            <div id="fill-foot">
+                <input type="button" value="提交问卷">
+            </div>
+        </div>
+    </div>
+    <div id="data">
+        <div id="data-1">
+            <div id="data-title">
+                <p>问卷标题</p>
+                <span>问卷总提交次数：0</span>
+            </div>
+            <div class="queData">
+            </div>
+            <div id="data-foot">
+                <input type="button" value="返回">
+            </div>
+        </div>
+    </div>
+    <div id="list">
+        <section>
+            <h1>问卷列表</h1>
+            <table class="queList">
+                <thead>
+                    <tr>
+                        <td>选中</td>
+                        <td>问卷名称</td>
+                        <td>问卷状态</td>
+                        <td>功能区域</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><input id='selectAll' type="checkbox">全选</td>
+                        <td></td>
+                        <td><input type="button" id="deleteQue" value="删除问卷"></td>
+                        <td><input type="button" id="createQue" value="新建问卷"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+    </div>
+    <script type="module" src="./scripts/task50.js"></script>
+</body>
+
+</html>

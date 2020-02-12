@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#div1 {
+    position: relative;
+    margin-left: 200px;
+    width: 300px;
+}
+input[type=text] {
+    border: 1px solid rgba(0, 0, 0, 1);
+    cursor: auto;
+}
+ul {
+    border: 1px solid rgba(128, 128, 128, .5);
+    margin-top: -1px;
+    visibility: hidden;
+}
+.li1 {
+    list-style: none;
+    color: rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+.active {
+    background-color: rgba(128, 128, 128, .5);
+    list-style: none;
+}
+.word {
+    color: red;
+}

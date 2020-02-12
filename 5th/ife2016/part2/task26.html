@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>task26</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 1918px;
+            height: 676px;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #div1 {
+            width: 600px;
+            height: 600px;
+            border: 4px solid #949494;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes moveX {
+            from {
+                left: 645px;
+            }
+
+            to {
+                left: 1245px;
+            }
+        }
+
+        @keyframes moveY {
+            to {
+                top: 24px;
+            }
+
+            from {
+                top: 624px;
+            }
+        }
+
+        .move {
+            width: 40px;
+            height: 40px;
+            font-size: 12px;
+            background-color: #32c33a;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .moving {
+            animation: moveX 10s cubic-bezier(0.36, 0, 0.64, 1) -5s infinite alternate-reverse, moveY 10s cubic-bezier(0.36, 0, 0.64, 1) 0s infinite alternate-reverse;
+        }
+
+        #planet {
+            display: flex;
+            width: 100px;
+            height: 100px;
+            border: 3px solid black;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #controler {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #screen {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+        <div class="move moving">卫星</div>
+        <div id="planet">行星</div>
+    </div>
+    <div id="controler">
+        <input type="text">
+        引擎系统：<select name="" id="engine">
+            <option value="0020">小</option>
+            <option value="0021">中</option>
+            <option value="0022">大</option>
+        </select>
+        能源系统：<select name="" id="energy">
+            <option value="0010">小</option>
+            <option value="0011">中</option>
+            <option value="0012">大</option>
+        </select>
+        <input type="button" value="添加">
+    </div>
+    <div id="screen"></div>
+    <script>
+        var addP = document.querySelector('input[value=添加]');
+        var plaName = document.querySelector('input');
+        var root = document.querySelector('div');
+        var head = document.querySelector('head');
+        var controler = document.querySelector('#controler');
+        var json = {};
+        var obj = [
+        ];
+        addP.onclick = () => {
+            var obj = {
+                id: null,
+                name: null,
+                state: '0002',
+                engine: null,
+                energy: null,
+                fuel: 100,
+                cost: null,
+                supply: null,
+                speed: null
+            }
+            var engine = document.querySelector('#engine');
+            var energy = document.querySelector('#energy');
+            var engineType = engine.options[engine.selectedIndex].value;
+            var energyType = energy.options[energy.selectedIndex].value;
+            obj.name = plaName.value;
+            obj.state = '0000';
+            obj.engine = engineType;
+            obj.energy = energyType;
+            mediator(obj);
+            plaName.value = '';
+        }
+        class ship {
+            constructor(obj) {
+                this.data = {
+                    id: null,
+                    name: obj.name,
+                    fuel: obj.fuel,
+                    speed: obj.speed,
+                    cost: obj.cost,
+                    supply: obj.supply,
+                    count: null,
+                    fuelAdd: null,
+                    state: '0002',
+                    engine: obj.engine,
+                    energy: obj.energy
+                }
+            }
+            addShip(engineType, energyType) {
+                this.data.id = new Date().getTime(),
+                    obj.push(this.data);
+                var div = document.createElement('div');
+                div.setAttribute('data-id', this.data.id);
+                div.style.backgroundColor = `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},0.8)`;
+                div.innerHTML = `<h1>${this.data.name}</h1>
+                                <p>${this.data.fuel}%</p>`;
+                div.classList.add('move');
+                this.top = Math.floor(Math.random() * 600);
+                this.left = Math.floor(600 + Math.random() * 600);
+                div.style.top = this.top + 'px';
+                div.style.left = this.left + 'px';
+                this.div = div;
+                root.appendChild(this.div);
+                var div2 = document.createElement('div');
+                div2.setAttribute('data-id', this.data.id);
+                div2.innerHTML = `<p data-id='${this.data.id}''>${this.data.name}飞船</p><input type='button' value='起飞'><input type='button' value='停止'><input type='button' value='自毁'><br>`;
+                controler.appendChild(div2);
+            }
+            start(id) {
+                if (this.data.fuel < 0) {
+                    console.log(`${this.data.id}飞船 燃油耗尽。。。`);
+                    return false;
+                } else if (this.data.state === '0001') {
+                    console.log('already start!');
+                    return false;
+                }
+                clearInterval(this.data.fuelAdd);
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = `
+                @keyframes x${this.data.id}{
+                    to{
+                        left:${this.left}px;
+                    }
+                    from{
+                        left:${1918 - this.left}px;
+                    }
+                }
+                @keyframes y${this.data.id}{
+                    to{
+                        top:${this.top}px;
+                    }
+                    from{
+                        top:${676 - this.top}px;
+                    }
+                }
+                .moving${this.data.id}{
+                    animation:x${this.data.id} ${this.data.speed}s cubic-bezier(0.36, 0, 0.64, 1) ${this.data.speed * 0.5}s infinite alternate-reverse,y${this.data.id} ${this.data.speed}s cubic-bezier(0.36, 0, 0.64, 1) 0s infinite alternate-reverse;
+                }`;
+                var style1 = document.styleSheets[0];
+                document.head.appendChild(style);
+                var thisDiv = document.querySelector(`div[data-id='${this.data.id}']`);
+                thisDiv.classList.add(`moving${this.data.id}`);
+                this.data.state = '0001';
+                console.log(`${this.data.name}飞船 启动`);
+                console.log(`飞船引擎${this.data.engine},能源${this.data.energy},速度${1 / this.data.speed}圈/s`);
+                this.data.count = setInterval(() => {
+                    this.data.fuel -= this.data.cost;
+                    thisDiv.querySelector('p').innerHTML = `${this.data.fuel}%`;
+                    obj.forEach(item => {
+                        if (item.id === this.data.id) {
+                            item = this.data;
+                        }
+                    });
+                    console.log(this.data.state)
+                    if (this.data.fuel < 0) {
+                        this.data.fuel = 0;
+                        thisDiv.querySelector('p').innerHTML = `${this.data.fuel}%`;
+                        this.top = thisDiv.offsetTop;
+                        this.left = thisDiv.offsetLeft;
+                        thisDiv.classList.remove(`moving${this.data.id}`);
+                        thisDiv.style.top = this.top + 'px';
+                        thisDiv.style.left = this.left + 'px';
+                        this.data.state = '0002';
+                        console.log(`${this.data.id}飞船 燃油耗尽。。。`);
+                        obj.forEach(item => {
+                            if (item.id === this.data.id) {
+                                item = this.data;
+                            }
+                        });
+                        clearInterval(this.data.count);
+                    }
+                }, 1000);
+                this.data.fuelAdd = setInterval(() => {
+                    this.data.fuel += this.data.supply;
+                    thisDiv.querySelector('p').innerHTML = `${this.data.fuel}%`;
+                    if (this.data.fuel > 100) {
+                        this.data.fuel = 100;
+                        thisDiv.querySelector('p').innerHTML = `${this.data.fuel}%`;
+                        obj.forEach(item => {
+                            if (item.id === this.data.id) {
+                                item = this.data;
+                            }
+                        });
+                        clearInterval(this.data.fuelAdd);
+                    }
+                }, 1001);
+            }
+            stop(id) {
+                if (this.data.state === '0002') {
+                    console.log('already stop!');
+                    return false;
+                }
+                var thisDiv = document.querySelector(`div[data-id='${this.data.id}']`);
+                this.data.state = '0002';
+                console.log(`${this.data.name}飞船 停止`);
+                clearInterval(this.data.count);
+                this.top = thisDiv.offsetTop;
+                this.left = thisDiv.offsetLeft;
+                thisDiv.classList.remove(`moving${this.data.id}`);
+                thisDiv.style.top = this.top + 'px';
+                thisDiv.style.left = this.left + 'px';
+                obj.forEach(item => {
+                    if (item.id === this.data.id) {
+                        item = this.data;
+                    }
+                });
+            }
+            boom(id) {
+                console.log(`${this.data.id}飞船 自毁`);
+                var thisDiv = document.querySelector(`div[data-id='${this.data.id}']`);
+                var thisControler = document.querySelector(`#controler div[data-id='${this.data.id}']`);
+                root.removeChild(thisDiv);
+                controler.removeChild(thisControler);
+                obj = obj.filter(item => {
+                    return item.id != id;
+                });
+                for (let i in json) {
+                    json[i].data.id == id ? json[i] = undefined : [];
+                }
+            }
+        }
+        function adapter(obj) {
+            var screen = document.querySelector('#screen');
+            screen.innerHTML = '';
+            obj.forEach(item => {
+                var div = document.createElement('div');
+                div.setAttribute('data-id', item.id);
+                var str = `
+                <p>飞船名称：${item.name}</p>
+                <p>燃料剩余：${item.fuel}%</p>
+                <p>飞船状态：${item.state === '0002' ? '停止' : '飞行'}</p>
+                `;
+                div.innerHTML = str;
+                if (screen.querySelector(`div[data-id='${item.id}']`)) {
+                    var targetDiv = screen.querySelector(`div[data-id='${item.id}']`);
+                    targetDiv.innerHTML = str;
+                    screen.appendChild(targetDiv);
+                } else {
+                    screen.appendChild(div);
+                }
+            });
+        }
+        function mediator(obj) {
+            var bool, count = 0;
+            if (obj.state == '0000') {
+                if (Object.keys(json).length >= 4) return false;
+                var obje;
+                var engineNum, energyNum;
+                switch (obj.engine) {
+                    case '0020':
+                        obj.cost = 5;
+                        break;
+                    case '0021':
+                        obj.cost = 6;
+                        break;
+                    case '0022':
+                        obj.cost = 7;
+                        break;
+                    default:
+                        break;
+                }
+                switch (obj.energy) {
+                    case '0010':
+                        obj.supply = 2;
+                        break;
+                    case '0011':
+                        obj.supply = 3;
+                        break;
+                    case '0012':
+                        obj.supply = 4;
+                        break;
+                    default:
+                        break;
+                }
+                obj.speed = obj.fuel / obj.cost / 2;
+                obje = new ship(obj);
+                json[obj.name] = obje;
+                json[obj.name].addShip();
+                console.log(`${obj.name}飞船 创建`);
+            } else {
+                while (bool !== 1) {
+                    if (Math.random() > 0.1) {
+                        bool = 1;
+                        setTimeout(() => {
+                            switch (obj.state) {
+                                case '0001': {
+                                    json[obj.name].start(obj.id);
+                                }
+                                    break;
+                                case '0002': {
+                                    json[obj.name].stop(obj.id);
+                                }
+                                    break;
+                                case '0003': {
+                                    json[obj.name].boom(obj.id);
+                                }
+                                    break;
+                                default: [];
+                            }
+                        }, 300);
+                    } else {
+                        count++;
+                        console.log('指令传输失败');
+                        console.log(`第${count}次重连中`);
+                    }
+                }
+            }
+        }
+        document.addEventListener('click', () => {
+            if (event.target.nodeName === "INPUT") {
+                if (event.target.parentElement.querySelector('p')) {
+                    var p = event.target.parentElement.querySelector('p');
+                }
+                var obj = {
+                    id: null,
+                    name: null,
+                    state: null
+                }
+                switch (event.target.getAttribute('value')) {
+                    case '起飞': {
+                        obj.id = p.getAttribute('data-id');
+                        obj.name = p.innerHTML.slice(0, -2);
+                        obj.state = '0001';
+                        mediator(obj);
+                    }
+                        break;
+                    case '停止': {
+                        obj.id = p.getAttribute('data-id');
+                        obj.name = p.innerHTML.slice(0, -2);
+                        obj.state = '0002';
+                        mediator(obj);
+                    }
+                        break;
+                    case '自毁': {
+                        obj.id = p.getAttribute('data-id');
+                        obj.name = p.innerHTML.slice(0, -2);
+                        obj.state = '0003';
+                        mediator(obj);
+                    }
+                        break;
+                    default: [];
+                }
+            }
+        })
+        setInterval(() => {
+            adapter(obj);
+        }, 100);
+    </script>
+</body>
+
+</html>

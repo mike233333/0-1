@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task30 表单（二）多个表单项的动态校验 </title>
+    <style type="text/css">
+        body {
+            font-family: "Microsoft Yahei"
+        }
+
+        input[type="submit"] {
+            border: none;
+            background-color: #2F79BA;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        div {
+            margin: 5px auto;
+            display: flex;
+            flex-flow: inherit;
+            width: 300px;
+        }
+
+        input {
+            border: 1px solid #888;
+        }
+
+        input[type="text"] {
+            padding: 7px;
+        }
+
+        p {
+            font-size: .8rem;
+            color: #BBBBBB;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="#" method="get" id="form">
+        <div>
+            <label for="name">名称</label>
+            <input type="text" id="name" />
+            <p>必填，长度为4~16个字符</p>
+        </div>
+        <div>
+            <label for="password">密码</label>
+            <input type="password" id="password" />
+            <p>请输入密码</p>
+        </div>
+        <div>
+            <label for="password_confirm">密码确认</label>
+            <input type="password" id="password_confirm" />
+            <p>再次输入相同的密码</p>
+        </div>
+        <div>
+            <label for="email">邮箱</label>
+            <input type="email" id="email" />
+            <p>输入您的邮箱</p>
+        </div>
+        <div>
+            <label for="phone_number">手机</label>
+            <input type="text" id="phone_number" />
+            <p>输入您的11位手机号码</p>
+            <input type="submit" id="submit" value="提交" />
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        var input = document.querySelectorAll('div input');
+        for (let i = 0; i < input.length - 1; i++) {
+            input[i].onfocus = () => {
+                event.target.nextElementSibling.style.display = 'block';
+            }
+            input[i].onblur = () => {
+                check(event.target);
+            }
+        }
+        input[input.length - 1].onclick = () => {
+            if (check(...input)==5) {
+                console.log('提交成功');
+            } else {
+                console.log('提交失败');
+            }
+        }
+        const check = (...obj) => {
+            var bool = 0;
+            obj.forEach(item => {
+                if (item.value.length === 0) return false;
+                switch (item.getAttribute('type')) {
+                    case 'text': {
+                        if (item.getAttribute('id') === 'name') {
+                            var arr = item.value.split('');
+                            var count = 0;
+                            arr.forEach(item => {
+                                var reg = /\w|\p{P}|\p{S}|\p{Z}/iug;
+                                var reg2 = /\p{Unified_Ideograph}/ug;
+                                reg.test(item) ? count++ : [];
+                                reg2.test(item) ? count += 2 : [];
+                            });
+                            if (count >= 4 && count <= 16) {
+                                bool++;
+                                item.nextElementSibling.innerHTML = '验证通过';
+                                item.style.border = '1px solid green';
+                            } else {
+                                item.nextElementSibling.innerHTML = '验证错误';
+                                item.style.border = '1px solid red';
+                            }
+                        } else if (item.getAttribute('id') === 'phone_number') {
+                            var reg = /^\d{11}$/g;
+                            if (reg.test(item.value)) {
+                                bool++;
+                                item.nextElementSibling.innerHTML = '验证通过';
+                                item.style.border = '1px solid green';
+                            } else {
+                                item.nextElementSibling.innerHTML = '验证错误';
+                                item.style.border = '1px solid red';
+                            }
+                        }
+                    }
+                        break;
+                    case 'password': {
+                        var pas = document.querySelector('#password'),
+                            pas2 = document.querySelector('#password_confirm');
+                        if (pas.value === pas2.value) {
+                            bool++;
+                            item.nextElementSibling.innerHTML = '验证通过';
+                            item.style.border = '1px solid green';
+                        } else {
+                            item.nextElementSibling.innerHTML = '验证错误';
+                            item.style.border = '1px solid red';
+                        }
+                    }
+                        break;
+                    case 'email': {
+                        var reg = /^\w+@[A-Za-z0-9]+\.[A-Za-z]+$/ig;
+                        if (reg.test(item.value)) {
+                            bool++;
+                            item.nextElementSibling.innerHTML = '验证通过';
+                            item.style.border = '1px solid green';
+                        } else {
+                            item.nextElementSibling.innerHTML = '验证错误';
+                            item.style.border = '1px solid red';
+                        }
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return bool;
+        }
+    </script>
+</body>
+
+</html>

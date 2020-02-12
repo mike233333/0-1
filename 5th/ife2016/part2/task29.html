@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task29 表单（一）单个表单项的检验</title>
+    <style type="text/css">
+        body {
+            font-family: "Microsoft Yahei"
+        }
+
+        input[type="button"] {
+            border: none;
+            background-color: #2F79BA;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            padding: 7px;
+        }
+
+        p {
+            font-size: .8rem;
+            color: #BBBBBB;
+            margin: 0 0 0 35px;
+        }
+    </style>
+</head>
+
+<body>
+    <label for="name">名称</label>
+    <input type="text" id="name" />
+    <input type="button" id="validate" value="验证" />
+    <p id="hint">必填，长度为4~16个字符</p>
+
+    <script type="text/javascript">
+        var button = document.querySelector('#validate');
+        var text = document.querySelector('input');
+        var p = document.querySelector('#hint');
+        button.onclick = () => {
+            var arr = text.value.split('');
+            var count = 0;
+            arr.forEach(item => {
+                var reg = /\w|\p{P}|\p{S}|\p{Z}/iug;
+                var reg2 = /\p{Unified_Ideograph}/ug;
+                reg.test(item) ? count++ : [];
+                reg2.test(item) ? count += 2 : [];
+            });
+            if (count >= 4 && count <= 16) {
+                p.style.color = 'green';
+                p.innerHTML = '符合规范';
+            } else {
+                p.style.color = 'red';
+                p.innerHTML = '不符合规范';
+            }
+            console.log('字符位数'+count);
+        }
+    </script>
+</body>
+
+</html>

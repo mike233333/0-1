@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#div1 {
+    float: left;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+#div2 {
+    float: left;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+ul {
+    height: 400px;
+    width: 200px;
+    border: 1px solid;
+
+}
+li {
+    height: 50px;
+    width: 200px;
+    background-color: red;
+    list-style: none;
+    border: 1px solid;
+    margin: -1px;
+    cursor: pointer;
+    z-index: 5;
+}
+li:active {
+    opacity: .5;
+}

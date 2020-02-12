@@ -1,0 +1,61 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+#div1{
+    position: relative;
+}
+#photo{
+    width: 640px;
+    height: 360px;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#img1{
+    position: absolute;
+    top: 0%;
+    z-index: 1;
+}
+#button1{
+    position: relative;
+    text-align: center;
+}
+#button1 a{
+    font-size: 24px;
+}
+p{
+    text-align: center;
+    font-size: 25px;
+}
+#button3{
+    position: absolute;
+    text-align: center;
+    width: 300px;
+    left: 50%;
+    margin-left: 100px;
+    z-index: 99;
+    top: 85%;
+}
+#button3 a{
+    text-decoration: none;
+    outline: none;
+    background-color: rgb(231, 174, 160);
+    font-size: 20px;
+    border: 2px solid black;
+}
+#button4{
+    position: relative;
+    text-align: right;
+    top: 40%;
+    z-index: 99;
+}
+#button2{
+    position: absolute;
+    top: 40%;
+    z-index: 100;
+}
+#button2 img,#button4 img{
+    width: 40px;
+    height: 40px;
+}

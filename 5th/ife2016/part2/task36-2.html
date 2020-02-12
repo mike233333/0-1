@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>task36-2</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #body {
+            display: flex;
+            flex-flow: wrap;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid grey;
+            text-align: center;
+            background-color: white;
+        }
+
+        .td {
+            border: none;
+        }
+
+        #controler {
+            margin-top: 30px;
+            margin-left: 10px;
+            height: 530px;
+            text-align: center;
+        }
+
+        #input {
+            text-align: left;
+        }
+
+        canvas {
+            position: absolute;
+            z-index: -1;
+        }
+
+        img {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="body">
+        <table id="table"></table>
+        <div id="controler">
+            <div id="input">
+                <div>
+                    <input type="file" value="upload" accept="image/*">
+                </div>
+                <input type="text" id='interval' placeholder="输入间隔时间（>1ms）">
+                <br>
+                <input type="text" id='px' placeholder="输入模糊度（5-20）">
+                <br>
+                <input type="button" value="paint">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //画格子
+        var table = document.querySelector('#table');
+        for (let i = 0; i < 11; i++) {
+            var tr = document.createElement('tr');
+            for (let j = 0; j < 21; j++) {
+                var td = document.createElement('td');
+                if (i === 0) {
+                    j === 0 ? [] : td.innerHTML = j;
+                    td.classList.add('td');
+                } else {
+                    if (j === 0) {
+                        td.innerHTML = i;
+                        td.classList.add('td');
+                    }
+                }
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+        //上传文件读取
+        var file = document.querySelector('input[type=file]');
+        const loadImg = (event) => {
+            var image = event.target.files[0];
+            var tarImg = document.createElement('img');
+            var reader = new FileReader();
+            reader.onloadstart = () => {
+                console.log('开始读取图片');
+            };
+            reader.onload = () => {
+                tarImg.src = `${reader.result}`;
+                tarImg.style.display = 'none';
+                table.appendChild(tarImg);
+                console.log('图片设置完成');
+            };
+            reader.readAsDataURL(image);
+        }
+        file.onchange = () => {
+            loadImg(event);
+        }
+        const show = (pic, interval) => {
+            var image = document.querySelector('img');
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            canvas.height = '530';
+            canvas.width = '1060';
+            canvas.style.top = '53px';
+            canvas.style.left = '53px';
+            table.appendChild(canvas);
+            if (image.height >= 530 && image.width >= 1060) {
+                if (image.width / image.height > 2) {
+                    var num = image.height / 530;
+                    //宽高比 大于说明按高度缩放
+                } else {
+                    var num = image.width / 1060;
+                }
+                var x = (image.width - 1060 * num) / 2,
+                    y = (image.height - 530 * num) / 2;
+                ctx.drawImage(image, x, y, 1060 * num, 530 * num, 0, 0, 1060, 530)
+            } else if (image.height > 530 && image.width < 1060) {
+                var y = (image.height - image.width / 2) / 2;
+                ctx.drawImage(image, 0, y, image.width, image.width / 2, 0, 0, 1060, 530);
+            } else if (image.height < 530 && image.width > 1060) {
+                var x = (image.width - image.height * 2) / 2;
+                ctx.drawImage(image, x, 0, image.height * 2, image.height, 0, 0, 1060, 530);
+            } else if (image.height < 530 && image.width < 1060) {
+                ctx.drawImage(image, 0, 0, 1060, 530);
+            } else {
+                console.log('图片尺寸不合规，请调整');
+            }
+            //下为模糊功能
+            //getImageData的后两个参数重要 应为image的实际高宽 如果固定为canvas高宽则超出部分没有颜色识别 都是花的
+            var data = ctx.getImageData(0, 0, image.width, image.height).data;
+            var arr = [];
+            var pic2 = Number(pic);
+            for (var x = 0; x < image.width; x += pic2) {
+                for (var y = 0; y < image.height; y += pic2) {
+                    var px1 = u8carray(x, y, image.width) + 1,
+                        px2 = u8carray(x, y, image.width) + 2,
+                        px3 = u8carray(x, y, image.width) + 3,
+                        px4 = u8carray(x, y, image.width) + 4;
+                    arr.push({
+                        r: data[px1],
+                        g: data[px2],
+                        b: data[px3],
+                        a: data[px4]
+                    });
+                }
+            }
+            var count = 0
+            for (var x = 0; x < image.width; x += pic2) {
+                for (var y = 0; y < image.height; y += pic2) {
+                    ctx.fillStyle = `rgb(${arr[count].r},${arr[count].g},${arr[count].b})`;
+                    ctx.fillRect(x, y, pic2, pic2);
+                    ctx.fill();
+                    count++;
+                }
+            }
+            //以上 不需要模糊直接去掉上面部分即可
+            //打印图片思路为图片低层级被table覆盖
+            //然后定时将tabel隐藏而让底下的图片一格格显示
+            //这个方式着实讨巧。。。
+            setTimeHiddenTd(interval);
+        }
+        //计算u8cArray的index下标 来区分每个像素格子
+        const u8carray = (x, y, wid) => {
+            return (y * wid + x) * 4 - 1;
+        }
+        const setTimeHiddenTd = (interval) => {
+            var td = document.querySelectorAll('td');
+            console.log(td.length)
+            for (let i = 0; i < td.length; i++) {
+                setTimeout(() => {
+                    td[i].style.visibility = 'hidden';
+                }, i * interval + 1);
+            }
+        }
+        var intervalV = document.querySelector('#interval');
+        var pxV = document.querySelector('#px');
+        var button = document.querySelector('input[type=button]');
+        button.onclick = () => {
+            if (!intervalV.value && intervalV.value < 1 && !pxV.value && pxV.value < 5 && pxV.value > 20) return false;
+            show(pxV.value, intervalV.value);
+        }
+        //2019.12.11第一版完成
+    </script>
+</body>
+
+</html>

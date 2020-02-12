@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>task36</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #body {
+            display: flex;
+            flex-flow: wrap;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid grey;
+            text-align: center;
+        }
+
+        .td {
+            border: none;
+        }
+
+        #icon {
+            background: url('task36.jpg') no-repeat;
+            position: absolute;
+            background-size: auto;
+            width: 50px;
+            height: 50px;
+            transition: all 1s;
+        }
+
+        #controler {
+            margin-top: 30px;
+            margin-left: 10px;
+            height: 530px;
+            text-align: center;
+        }
+
+        #count {
+            margin: 0;
+            background-color: rgba(128, 128, 128, .1);
+            width: 50px;
+            padding-inline-start: 0px;
+            font-size: .9rem;
+        }
+
+        #count li {
+            list-style: none;
+            padding: 1px 0;
+            height: 15px;
+        }
+
+        #textarea {
+            display: flex;
+        }
+
+        #order {
+            line-height: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="body">
+        <table id="table"></table>
+        <div id="icon"></div>
+        <div id="controler">
+            <div id="input">
+                <input type="button" value="EXECUTE">
+                <input type="button" value="CLEAR">
+                <input type="button" value="RESET">
+            </div>
+            <div id="textarea">
+                <ul id="count">
+                    <li>1</li>
+                </ul>
+                <textarea name="" id="order" cols="30" rows="30">mov to 4,4</textarea>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var table = document.querySelector('#table');
+        for (let i = 0; i < 10; i++) {
+            var tr = document.createElement('tr');
+            for (let j = 0; j < 10; j++) {
+                var td = document.createElement('td');
+                if (i === 0) {
+                    j === 0 ? [] : td.innerHTML = j;
+                    td.classList.add('td');
+                } else {
+                    if (j === 0) {
+                        td.innerHTML = i;
+                        td.classList.add('td');
+                    }
+                }
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+        var icon = document.querySelector('#icon');
+        var execute = document.querySelector('input[value=EXECUTE]');
+        var clear = document.querySelector('input[value=CLEAR]');
+        var reset = document.querySelector('input[value=RESET]');
+        //forward：0上90右180下270左
+        var forward = 0;
+        var countLeft = 54,
+            countTop = 54;
+        icon.style.top = '54px';
+        icon.style.left = '54px';
+        var wall = [];
+        var textarea = document.querySelector('textarea');
+        const update = () => {
+            var arr = textarea.value.split(/\r*\n/);
+            var ul = document.querySelector('#count');
+            var li = '';
+            for (let i = 1; i < arr.length + 1; i++) {
+                li += `<li>${i}</li>`;
+            }
+            ul.innerHTML = li;
+        }
+        textarea.oninput = () => update();
+        clear.onclick = () => {
+            textarea.value = '';
+            update();
+        }
+        reset.onclick = () => {
+            location.reload();
+        }
+        const changeForward = (value) => {
+            switch (value) {
+                case 'TUN LEF': {
+                    forward -= 90;
+                    thing(forward);
+                }
+                    break;
+                case 'TUN RIG': {
+                    forward += 90;
+                    thing(forward);
+                }
+                    break;
+                case 'TUN BAC': {
+                    forward += 180;
+                    thing(forward);
+                }
+                    break;
+                case 'LEF': {
+                    forward = 270;
+                    thing(forward);
+                }
+                    break;
+                case 'TOP': {
+                    forward = 0;
+                    thing(forward);
+                }
+                    break;
+                case 'RIG': {
+                    forward = 90;
+                    thing(forward);
+                }
+                    break;
+                case 'BOT': {
+                    forward = 180;
+                    thing(forward);
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+        const thing = (value) => {
+            icon.style.transform = `rotate(${value}deg)`;
+        }
+        const move = (value) => {
+            var iconLef = countLeft;
+            var iconTop = countTop;
+            var bool = true;
+            switch (value) {
+                case 0: {
+                    if (iconTop === 54) return false;
+                    wall.forEach(item => {
+                        if (iconTop - 53 === item.top && iconLef === item.left) {
+                            bool = false;
+                        }
+                    });
+                    if (!bool) return false;
+                    countTop -= 53;
+                    icon.style.top = iconTop - 53 + 'px';
+                }
+                    break;
+                case 90: {
+                    if (iconLef === 478) return false;
+                    wall.forEach(item => {
+                        if (iconLef + 53 === item.left && iconTop === item.top) {
+                            bool = false;
+                        }
+                    });
+                    if (!bool) return false;
+                    countLeft += 53;
+                    icon.style.left = iconLef + 53 + 'px';
+                }
+                    break;
+                case 180: {
+                    if (iconTop === 478) return false;
+                    wall.forEach(item => {
+                        if (iconTop + 53 === item.top && iconLef === item.left) {
+                            bool = false;
+                        }
+                    });
+                    if (!bool) return false;
+                    countTop += 53;
+                    icon.style.top = iconTop + 53 + 'px';
+                }
+                    break;
+                case 270: {
+                    if (iconLef === 54) return false;
+                    wall.forEach(item => {
+                        if (iconLef - 53 === item.left && iconTop === item.top) {
+                            bool = false;
+                        }
+                    });
+                    if (!bool) return false;
+                    countLeft -= 53;
+                    icon.style.left = iconLef - 53 + 'px';
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+        const render = (text) => {
+            var num = text.slice(-1);
+            var i = 1;
+            switch (text.slice(0, -2)) {
+                case 'GO':
+                    move(forward % 360);
+                    break;
+                case 'TUN LEF': {
+                    changeForward(text.slice(0, -2));
+                }
+                    break;
+                case 'TUN RIG': {
+                    changeForward(text.slice(0, -2));
+                }
+                    break;
+                case 'TUN BAC': {
+                    changeForward(text.slice(0, -2));
+                }
+                    break;
+                case 'TRA LEF': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(270);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'TRA TOP': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(0);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'TRA RIG': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(90);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'TRA BOT': {
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(180);
+                        }, i * 1000 - 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV LEF': {
+                    changeForward('LEF');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(270);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV TOP': {
+                    changeForward('TOP');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(0);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV RIG': {
+                    changeForward('RIG');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(90);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'MOV BOT': {
+                    changeForward('BOT');
+                    while (i <= num) {
+                        setTimeout(() => {
+                            move(180);
+                        }, i * 1000);
+                        i++;
+                    }
+                }
+                    break;
+                case 'BUILD': {
+                    var remainder = forward % 360;
+                    var iconLef = countLeft;
+                    var iconTop = countTop;
+                    buildWall(iconTop, iconLef, remainder);
+                    paintWall([], 1);
+                    console.log('建墙成功,墙坐标为', wall);
+                }
+                    break;
+                case 'RANDOM': {
+                    var min = 1, max = 20, i = 0;
+                    var num = Math.floor(Math.random() * (max - min + 1)) + min;
+                    while (i < num) {
+                        var index1 = Math.floor(Math.random() * 4);
+                        var top = Math.floor(Math.random() * 9),
+                            left = Math.floor(Math.random() * 9),
+                            remainder = [0, 90, 180, 270];
+                        buildWall(54 + top * 53, 54 + left * 53, remainder[index1]);
+                        i++;
+                    }
+                    paintWall([], 1);
+                    console.log(wall)
+                }
+                default: {
+                    var reg = /^(.\d|\d)s$/;
+                    var reg2 = /^BRU\s[A-Za-z]+$/i;
+                    var reg3 = /MOV/i;
+                    if (reg.test(text)) {
+                        icon.style.transition = `all ${text.value.slice(0, -1)}s`;
+                    } else if (reg2.test(text.slice(0, -2))) {
+                        var str = text.split(' ');
+                        paintWall(str[1]);
+                    } else if (reg3.test(text)) {
+                        var str = text.match(/MOV\sTO\s\d,\d{1}/);
+                        var str2 = str[0].slice(-3);
+                        var str3 = str2.split(',');
+                        var result = moveTo(str3[0], str3[1]);
+                        paint(result);
+                        moveToShow(result);
+                    }
+                }
+                    break;
+            }
+        }
+        const paint = (arr) => {
+            var td = document.querySelectorAll('td');
+            td.forEach(item => {
+                item.style.backgroundColor = 'white';
+                arr.forEach(item2 => {
+                    if (item2.top == item.offsetTop + 2 && item2.left == item.offsetLeft + 2) {
+                        item.style.backgroundColor = 'red';
+                    }
+                })
+            })
+        }
+        const moveToShow = (arr) => {
+            for (let i = 0; i < arr.length; i++) {
+                setTimeout(() => {
+                    var iconTop = countTop,
+                        iconLef = countLeft;
+                    console.log(arr[i].top + ',' + arr[i].left);
+                    switch (arr[i].top + ',' + arr[i].left) {
+                        case (iconTop - 53) + ',' + (iconLef):
+                            changeForward('TOP');
+                            break;
+                        case (iconTop) + ',' + (iconLef + 53):
+                            changeForward('RIG');
+                            break;
+                        case (iconTop + 53) + ',' + (iconLef):
+                            changeForward('BOT');
+                            break;
+                        case (iconTop) + ',' + (iconLef - 53):
+                            changeForward('LEF');
+                            break;
+                        default:
+                            break;
+                    }
+                }, i * 1000);
+                setTimeout(() => {
+                    render('GO 1');
+                }, i * 1000 + 1000);
+            }
+        }
+        const changeLi = (i) => {
+            var li = document.querySelectorAll('#count li');
+            li[i].style.backgroundColor = 'green';
+        }
+        const buildWall = (iconTop, iconLef, remainder) => {
+            iconTop -= 2;
+            iconLef -= 2;
+            switch (remainder) {
+                case 0: {
+                    var obj = {
+                        top: iconTop - 53,
+                        left: iconLef
+                    }
+                    wall.push(obj);
+                }
+                    break;
+                case 90: {
+                    var obj = {
+                        top: iconTop,
+                        left: iconLef + 53
+                    }
+                    wall.push(obj);
+                }
+                    break;
+                case 180: {
+                    var obj = {
+                        top: iconTop + 53,
+                        left: iconLef
+                    }
+                    wall.push(obj);
+                }
+                    break;
+                case 270: {
+                    var obj = {
+                        top: iconTop,
+                        left: iconLef - 53
+                    }
+                    wall.push(obj);
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+        const paintWall = (color, text) => {
+            var remainder = forward % 360;
+            var iconLef = countLeft - 2;
+            var iconTop = countTop - 2;
+            if (text) {
+                var td = document.querySelectorAll('td');
+                wall.forEach(item => {
+                    td.forEach(item2 => {
+                        if (item2.offsetTop == item.top && item2.offsetLeft == item.left) {
+                            item2.innerHTML = 'wall';
+                        }
+                    })
+                })
+            } else {
+                switch (remainder) {
+                    case 0: {
+                        findTd(iconTop - 53, iconLef, color);
+                    }
+                        break;
+                    case 90: {
+                        findTd(iconTop, iconLef + 53, color);
+                    }
+                        break;
+                    case 180: {
+                        findTd(iconTop + 53, iconLef, color);
+                    }
+                        break;
+                    case 270: {
+                        findTd(iconTop, iconLef - 53, color);
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        const findTd = (top, left, color) => {
+            var bool;
+            wall.forEach(item => {
+                if (item.top === top && item.left === left) {
+                    bool = true;
+                }
+            });
+            if (!bool) {
+                console.log('没有墙无法粉刷');
+                return false;
+            }
+            var td = document.querySelectorAll('td');
+            td.forEach(item => {
+                if (item.offsetTop == top && item.offsetLeft == left) {
+                    item.style.backgroundColor = color;
+                }
+            });
+        }
+        execute.onclick = () => {
+            var arr = textarea.value.split(/\r*\n/);
+            var count = 0;
+            arr.forEach((item, index) => {
+                var str = item.match(/[A-Za-z]{3}\s[A-Za-z]{3}\s\d/g);
+                if (!str) {
+                    str = item.match(/[A-Za-z]{3}\s[A-Za-z]{3}$|build|random|go|mov\sto\s\d,\d$/g);
+                    if (!str) {
+                        str = item.match(/BRU\s[A-Za-z]+/i);
+                        if (!str) return false;
+                    }
+                    str[0] = str[0] + ' 1';
+                }
+                setTimeout(() => {
+                    changeLi(index);
+                    render(str[0].toUpperCase());
+                }, count * 1000);
+                count += str[0].slice(-1) * 1 + 1;
+            });
+        }
+        //A*算法 八方向路径比较特殊 四方向则暂时看不出和广度优先算法的分别
+        /*
+        const moveTo = (x, y) => {
+            var tarTop = 54 + (x - 1) * 53,
+                tarLef = 54 + (y - 1) * 53;
+            var iconTop = countTop,
+                iconLef = countLeft;
+            var openList = [],
+                closeList = [],
+                result = [],
+                resultIndex;
+            openList.push({
+                left: iconLef,
+                top: iconTop,
+                g: 0
+            });
+            do {
+                var currentNode = openList.shift();
+                closeList.push(currentNode);
+                var surNode = surroundNode(currentNode);
+                for (var i in surNode) {
+                    var item = surNode[i];
+                    if (item.top >= 54 && item.left >= 54 &&
+                        item.top <= 478 && item.left <= 478 &&
+                        !wall.find(item2 => item2.top + 2 == item.top && item2.left + 2 == item.left) &&
+                        !existList(item, closeList)
+                    ) {
+                        var g = currentNode.g + ((currentNode.top - item.top) * (currentNode.left - item.left) == 0 ? 10 : 14);
+                        if (!existList(item, openList)) {
+                            item['h'] = Math.abs(tarTop - item.top) + Math.abs(tarLef - item.left);
+                            item['g'] = g;
+                            item['f'] = item.g + item.h;
+                            item.parent = currentNode;
+                            openList.push(item);
+                        } else {
+                            var index = existList(item, openList);
+                            if (g < openList[index].g) {
+                                openList[index].parent = currentNode;
+                                openList[index].g = g;
+                                openList[index].F = g + item.h;
+                            }
+                        }
+                    }
+                }
+                if (openList.length == 0) {
+                    break;
+                }
+                openList.sort((a, b) => {
+                    return a.f - b.f;
+                });
+            } while (!(resultIndex = existList({ top: tarTop, left: tarLef }, openList)));
+            if (!resultIndex) {
+                result = [];
+            } else {
+                var currObj = openList[resultIndex];
+                do {
+                    result.unshift({
+                        top: currObj.top,
+                        left: currObj.left
+                    });
+                    currObj = currObj.parent;
+                } while (currObj.top != iconTop || currObj.left != iconLef);
+            }
+            return result;
+        }*/
+        //广度优先算法 固定起点到任意终点 实现路径似乎和只有四个方向的A*算法一样
+        const moveTo = (x, y) => {
+            var tarTop = 54 + (x - 1) * 53,
+                tarLef = 54 + (y - 1) * 53;
+            var iconTop = countTop,
+                iconLef = countLeft;
+            var openList = [],
+                closeList = [],
+                result = [],
+                resultIndex;
+            openList.push({
+                left: iconLef,
+                top: iconTop,
+            });
+            do {
+                var currentNode = openList.shift();
+                closeList.push(currentNode);
+                var surNode = surroundNode(currentNode);
+                for (var i in surNode) {
+                    var item = surNode[i];
+                    if (item.top >= 54 && item.left >= 54 &&
+                        item.top <= 478 && item.left <= 478 &&
+                        !wall.find(item2 => item2.top + 2 == item.top && item2.left + 2 == item.left) &&
+                        !existList(item, closeList)
+                    ) {
+                        if (!existList(item, openList)) {
+                            item.parent = currentNode;
+                            openList.push(item);
+                        }
+                    }
+                }
+                if (openList.length == 0) {
+                    break;
+                }
+            } while (!(resultIndex = existList({ top: tarTop, left: tarLef }, openList)));
+            if (!resultIndex) {
+                result = [];
+            } else {
+                var currObj = openList[resultIndex];
+                do {
+                    result.unshift({
+                        top: currObj.top,
+                        left: currObj.left
+                    });
+                    currObj = currObj.parent;
+                } while (currObj.top != iconTop || currObj.left != iconLef);
+            }
+            return result;
+        }
+        //鼠标onmouseover显示当前点到固定终点的广度优先算法 写法大概是跟moveTo反过来
+        /*
+        var td=document.querySelectorAll('td');
+        td.forEach(item=>{
+            item.onmouseover=()=>{
+                var way=moveTo2(item.offsetTop+2,item.offsetLeft+2);
+                paint(way);
+            }
+        })
+        const moveTo2 = (x, y) => {
+            var tarTop = countTop,
+                tarLef = countLeft;
+            var iconTop = x,
+                iconLef = y;
+            var openList = [],
+                closeList = [],
+                result = [],
+                resultIndex;
+            openList.push({
+                left: iconLef,
+                top: iconTop,
+            });
+            do {
+                var currentNode = openList.shift();
+                closeList.push(currentNode);
+                var surNode = surroundNode(currentNode);
+                for (var i in surNode) {
+                    var item = surNode[i];
+                    if (item.top >= 54 && item.left >= 54 &&
+                        item.top <= 478 && item.left <= 478 &&
+                        !wall.find(item2 => item2.top + 2 == item.top && item2.left + 2 == item.left) &&
+                        !existList(item, closeList)
+                    ) {
+                        if(!existList(item,openList)){
+                            item.parent=currentNode;
+                            openList.push(item);
+                        }
+                    }
+                }
+                if (openList.length == 0) {
+                    break;
+                }
+            } while (!(resultIndex = existList({ top: tarTop, left: tarLef }, openList)));
+            if (!resultIndex) {
+                result = [];
+            } else {
+                var currObj = openList[resultIndex];
+                do {
+                    result.unshift({
+                        top: currObj.top,
+                        left: currObj.left
+                    });
+                    currObj = currObj.parent;
+                } while (currObj.top != iconTop || currObj.left != iconLef);
+                !wall.find(item=>item.top+2==x&&item.left+2==y)?result.unshift({top:x,left:y}):[];
+            }
+            return result;
+        }*/
+        const surroundNode = (node) => {
+            var top = node.top,
+                left = node.left;
+            return [
+                //不允许斜向移动 允许则为八个方向
+                //{ top: top - 53, left: left - 53 },
+                { top: top - 53, left: left },
+                //{ top: top - 53, left: left + 53 },
+                { top: top, left: left + 53 },
+                //{ top: top + 53, left: left + 53 },
+                { top: top + 53, left: left },
+                //{ top: top + 53, left: left - 53 },
+                { top: top, left: left - 53 },
+            ]
+        }
+        const existList = (node, list) => {
+            for (var i in list) {
+                if (node.top == list[i].top && node.left == list[i].left) {
+                    return i;
+                }
+            }
+            return false;
+        }
+        //第一版 完成于2019.12.5
+    </script>
+
+</body>

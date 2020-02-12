@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Task3</title>
+    <link rel="stylesheet" href="styles/task3.css">
+</head>
+
+<body>
+    <div id="head">GTD Tools</div>
+    <div id="body">
+        <div id="task">
+            <div id="task1">
+                <p>所有任务<span id="countTask"></span></p>
+                <p>分类列表</p>
+                <ul class="ul1">
+                </ul>
+            </div>
+        </div>
+        <div id="list">
+            <div id="list1">
+                <ul>
+                    <li>所有</li>
+                    <li>未完成</li>
+                    <li>已完成</li>
+                </ul>
+            </div>
+            <div id="list2">
+            </div>
+        </div>
+        <div id="content" class="content">
+            <div class="content1" id="content2">
+                <span id="taskName2"></span>
+                <input type="button" value="编辑">
+                <input type="button" value="完成">
+                <input type="button" value="取消完成">
+            </div>
+            <p>任务日期：<span id="taskDate2"></p>
+            <div id="taskContent2"></div>
+        </div>
+        <div id="contents" class="content">
+            <div class="content1" id="content1">
+                <span><input type="text" id="taskName" placeholder="可输入十个字符以内"></span>
+                <input type="button" value="取消">
+                <input type="button" value="确认">
+            </div>
+            <p>任务日期：<span><input type="text" id="taskDate" placeholder="yyyy-mm-dd"></span></p>
+            <div><textarea id="taskContent" cols="300" rows="100" placeholder="任务内容"></textarea></div>
+        </div>
+
+    </div>
+    <div id="foot">
+        <div id="addCat" class="foot">新建分类</div>
+        <div id="addTask" class="foot foot2">新建任务</div>
+    </div>
+    <script src="scripts/task3.js"></script>
+</body>
+
+</html>

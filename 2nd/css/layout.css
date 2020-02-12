@@ -1,0 +1,60 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html{
+    height: 100%;
+    width: 100%;
+}
+body{
+    height: 100%;
+    width: 100%;
+}
+.pC1{
+    padding: 20px;
+    position: relative;
+    text-align: center;
+}
+.divC1{
+    border:5px solid;
+    height: 70%;
+    width: 90%;
+    margin:0 auto;
+    text-align:center;
+    overflow: auto;
+}
+.divC1 p{
+    text-align: left;
+}
+.divC2{
+    margin: 20px;
+    text-align: center;
+}
+#text1{
+    margin: 1px auto;
+    max-height: 31px;
+    width: 60%;
+    display: inline-block;
+    text-align: left;
+    overflow: auto;
+}
+input{
+    padding: 5px;
+}
+.pC2{
+    position: absolute;
+    padding: 27px;
+    right: 0%
+}
+li{
+    display: inline;
+}
+ul{
+    visibility: hidden;
+}
+div#buttonT{
+    display: inline-block;
+}
+body{
+    overflow: scroll;
+}
