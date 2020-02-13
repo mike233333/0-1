@@ -30,4 +30,9 @@ and i also think that coding a simple program using react maybe spent more time 
 maybe my thought are all wrong, hope i won't be embarrsed when l see this passage in the future.<br>
 --------------------------------probably is conclusion--------------------------------<br>
 recalling about the time spent here, it is such a long journey for me.<br>
-these months are probably the first time i try actively to study something i want. it is the first step for my new life. wish i can have a nice year.
+these months are probably the first time i try actively to study something i want. it is the first step for my new life. wish i can have a nice year.<br>
+<br>
+<br>
+----------------------------------surprise!----------------------------------------------<br>
+learn to package program with webpack. configuring webpack is troublesome.<br>
+and i didn't know the create-react-app i used to build react program until now, it can also package program because it has webpack built in. it just need to enter 'run build' to finish package work.<br>
