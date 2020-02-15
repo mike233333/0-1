@@ -1,0 +1,80 @@
+#task {
+    position: absolute;
+    padding-top: 20px;
+    width: 200px;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.5);
+    border-right: 1px solid grey;
+}
+#task>p {
+    margin-bottom: 15px;
+    text-indent: 15px;
+}
+.foot {
+    position: absolute;
+    height: 46px;
+    width: 100%;
+    bottom: 0;
+    border-top: 1px solid grey;
+    padding: 10px 0;
+    text-indent: 15px;
+    cursor: pointer;
+
+}
+.foot:hover {
+    background-color: rgba(128, 128, 128, 0.3);
+}
+.hover {
+    background-color: white;
+}
+p.hover::after {
+    opacity: 1 !important;
+}
+.ul1 {
+    cursor: pointer;
+}
+.ul1>li {
+    padding-left: 35px;
+}
+.ul1 p {
+    position: relative;
+    padding: 4px 0;
+    font-size: 15px;
+    font-weight: normal;
+    display: block;
+    user-select: none;
+    z-index: 5;
+}
+.ul1 p::after {
+    position: absolute;
+    content: "";
+    background-color: white;
+    width: 200px;
+    height: 20px;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    padding: 4px 0;
+    z-index: -1;
+}
+.ul1 p:hover::after {
+    opacity: 1;
+}
+.ul1 h1 input,.ul1 h2 input {
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    left: 172px;
+    opacity: 0;
+    z-index: 10;
+}
+.ul1 input:hover + p::after,.ul2 input:hover + p::after{
+    opacity: 1;
+}
+.ul1 h1:hover input,.ul1 h2:hover input {
+    opacity: 1;
+}
+.ul2 {
+    font-size: 15px;
+    padding-left: 15px;
+}

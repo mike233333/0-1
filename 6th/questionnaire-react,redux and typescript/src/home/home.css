@@ -1,0 +1,11 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.passage{
+    text-align: center;
+}
+.passage *{
+    margin: 10px 0;
+}
