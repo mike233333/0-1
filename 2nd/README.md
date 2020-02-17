@@ -5,7 +5,3 @@
 ----------------------------------------------------third commit-------------------------------------------------------------<br>
 add ES6 grammar<br>
 reconstruct to jQuery code<br>
-=======
-# first：message board
-0-1 year<br>
-Well,time begins here.
