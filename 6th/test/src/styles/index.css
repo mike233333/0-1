@@ -26,6 +26,45 @@ button {
 /************************************************/
 /************************************************/
 /************************************************/
+/*动画样式*/
+@keyframes banner {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes lef {
+    from {
+        margin-left: -100%;
+        opacity: 0;
+    }
+    to {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@keyframes rig {
+    from {
+        margin-left: 100%;
+        opacity: 0;
+    }
+    to {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@keyframes top {
+    from {
+        margin-top: 0;
+        margin-left: 0;
+    }
+    to {
+        margin-top: -300%;
+        margin-left: 100%;
+    }
+}
 /************************************************/
 /************************************************/
 /*侧边栏样式调整*/
@@ -115,49 +154,18 @@ button {
         margin-left: 7px;
     }
     /*banner*/
-    @keyframes banner {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-    @keyframes lef {
-        from {
-            margin-left: -100%;
-            opacity: 0;
-        }
-        to {
-            margin-left: 0;
-            opacity: 1;
-        }
-    }
-    @keyframes rig {
-        from {
-            margin-left: 100%;
-            opacity: 0;
-        }
-        to {
-            margin-left: 0;
-            opacity: 1;
-        }
-    }
-    @keyframes top {
-        from {
-            margin-top: 0;
-            margin-left: 0;
-        }
-        to {
-            margin-top: -300%;
-            margin-left: 100%;
-        }
-    }
     .mobile_banner {
         position: relative;
         width: 750px;
         height: 240px;
         margin-bottom: 58px;
+    }
+    .mobile_banner span {
+        position: absolute;
+        left: 180px;
+        top: 60px;
+        font-size: 24px;
+        animation: banner 2s;
     }
     .mobile_banner img {
         position: absolute;
@@ -180,7 +188,7 @@ button {
     }
     .mobile_banner img:nth-of-type(4) {
         top: 30px;
-        left: 430px;
+        left: 485px;
         animation: rig 1s,top 1s 2s;
         z-index: 5;
     }
@@ -459,10 +467,10 @@ button {
         line-height:14px;
         letter-spacing:1px;
     }
-    .mobile_review .video_list {
+    .mobile_review .mobile_video_list {
         display: flex;
     }
-    .mobile_review .video_box {
+    .mobile_review .mobile_video_box {
         flex: 1;
         width:341px;
         height:268px;
@@ -470,11 +478,11 @@ button {
         margin: 0 10px;
         cursor: pointer;
     }
-    .mobile_review .video_box img {
+    .mobile_review .mobile_video_box img {
         width:341px;
         height:191px;
     }
-    .mobile_review .video_box p {
+    .mobile_review .mobile_video_box p {
         margin-left: 11px;
         width:330px;
         height:31px;
@@ -512,7 +520,7 @@ button {
         margin-left: 5px;
     }
 
-    .mobile_message .message_head {
+    .mobile_message .mobile_message_head {
         display: flex;
         align-items: center;
         width:652px;
@@ -522,13 +530,13 @@ button {
         border-radius:12px;
         border:2px solid rgba(180,160,160,1);
     }
-    .mobile_message .message_head img {
+    .mobile_message .mobile_message_head img {
         display: inline-block;
         width:39px;
         height:40px;
         margin-right: 26px;
     }
-    .mobile_message .message_head p {
+    .mobile_message .mobile_message_head p {
         display: inline-block;
         width:570px;
         height:108px;
@@ -538,26 +546,26 @@ button {
         letter-spacing:2px;
     }
 
-    .mobile_message .message_main {
+    .mobile_message .mobile_message_main {
         margin-top: 24px;
         width:702px;
-        height:596px;
+        min-height:596px;
         background:rgba(255,255,255,1);
         border-radius:23px;
         border:2px solid rgba(180,160,160,1);
     }
-    .mobile_message .message_main>img:first-of-type {
+    .mobile_message .mobile_message_main>img:first-of-type {
         position: relative;
         top: -40px;
         left: 26px;
     }
-    .mobile_message .message_main>img:last-of-type {
+    .mobile_message .mobile_message_main>img:last-of-type {
         position: relative;
         top: -40px;
         left: 640px;
     }
 
-    .mobile_message .message_main_fill {
+    .mobile_message .mobile_message_main_fill {
         display: flex;
         align-items: center;
         margin: 0 auto;
@@ -568,7 +576,7 @@ button {
         border:2px solid rgba(180,160,160,1);
         margin-bottom: 59px;
     }
-    .mobile_message .message_main_fill input{
+    .mobile_message .mobile_message_main_fill input{
         margin-left: 12px;
         width:286px;
         height:24px;
@@ -578,7 +586,7 @@ button {
         letter-spacing:2px;
         border: none;
     }
-    .mobile_message .message_main_fill button:first-of-type {
+    .mobile_message .mobile_message_main_fill button {
         width:108px;
         height:42px;
         border-radius:20px;
@@ -590,26 +598,23 @@ button {
         line-height:18px;
         letter-spacing:2px;
     }
-    .mobile_message .message_main_fill button:last-of-type {
-        width:108px;
-        height:42px;
-        border-radius:20px;
+    .mobile_message .mobile_message_main_fill .mob_button_login {
         background:rgba(198,84,76,1);
         border:2px solid rgba(180,160,160,1);
         margin-left: 12px;
-        font-size:24px;
-        font-weight:400;
         color:rgba(255,255,255,1);
-        line-height:18px;
-        letter-spacing:2px;
+    }
+    .mobile_message .mobile_message_main_fill .mob_button_send {
+        display: none;
+        margin-left: 150px;
     }
 
-    .mobile_message .message_main_list {
+    .mobile_message .mobile_message_main_list {
         border-top: 1px solid rgba(217,210,210,1);
         margin-left: 26px;
         margin-right: 26px;
     }
-    .mobile_message .message_main_list::before {
+    .mobile_message .mobile_message_main_list::before {
         content: "最新评论(149)";
         display: block;
         position: relative;
@@ -625,17 +630,17 @@ button {
         text-align: center;
     }
 
-    .mobile_message .message_main_list_box {
+    .mobile_message .mobile_message_main_list_box {
         margin-top: 30px;
         padding-bottom: 20px;
         border-bottom: 1px solid rgba(217,210,210,1);
     }
-    .message_main_list_box div>img {
+    .mobile_message_main_list_box div>img {
         width:60px;
         height:60px;
         margin-right: 24px;
     }
-    .message_main_list_box div span:first-of-type {
+    .mobile_message_main_list_box div span:first-of-type {
         position: relative;
         top: -40px;
         width:106px;
@@ -646,7 +651,7 @@ button {
         line-height:29px;
         letter-spacing:2px;
     }
-    .message_main_list_box div span:nth-of-type(2) {
+    .mobile_message_main_list_box div span:nth-of-type(2) {
         position: relative;
         top: -10px;
         left: -107px;
@@ -657,7 +662,7 @@ button {
         line-height:26px;
         letter-spacing:2px;
     }
-    .message_main_list_box div span:last-of-type {
+    .mobile_message_main_list_box div span:last-of-type {
         position: relative;
         display: block;
         left: 605px;
@@ -668,18 +673,18 @@ button {
         background-color: #B4A0A0;
         text-align: center;
         cursor: pointer;
+        opacity: 0.5;
     }
-    .message_main_list_box div span:last-of-type::before {
+    .mobile_message_main_list_box div span:last-of-type::before {
         position: absolute;
         content: "";
         border: 20px solid transparent;
         border-bottom: 20px solid #B4A0A0;
         left: 1px;
-        top: -40px;
+        top: -38px;
     }
-    .message_main_list_box p:first-of-type {
+    .mobile_message_main_list_box p:first-of-type {
         width:550px;
-        height:105px;
         font-size:24px;
         color:rgba(90,50,60,1);
         line-height:35px;
@@ -687,19 +692,20 @@ button {
         margin-left: 87px;
         margin-top: -10px;
     }
-    .message_main_list_box p:last-of-type {
+    .mobile_message_main_list_box p:last-of-type {
         display: flex;
         position: relative;
         align-items: center;
         margin-top: 24px;
         left: 565px;
         height:26px;
+        width: 80px;
         font-size:20px;
         color:rgba(180,160,160,1);
         line-height:26px;
         letter-spacing:2px;
     }
-    .message_main_list_box p:last-of-type img {
+    .mobile_message_main_list_box p:last-of-type img {
         width:25px;
         height:25px;
         margin-right: 10px;
@@ -743,43 +749,12 @@ button {
         width: 978px;
         height: 287px;
     }
-    @keyframes banner {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-    @keyframes lef {
-        from {
-            margin-left: -100%;
-            opacity: 0;
-        }
-        to {
-            margin-left: 0;
-            opacity: 1;
-        }
-    }
-    @keyframes rig {
-        from {
-            margin-left: 100%;
-            opacity: 0;
-        }
-        to {
-            margin-left: 0;
-            opacity: 1;
-        }
-    }
-    @keyframes top {
-        from {
-            margin-top: 0;
-            margin-left: 0;
-        }
-        to {
-            margin-top: -300%;
-            margin-left: 100%;
-        }
+    .banner span {
+        position: absolute;
+        left: 270px;
+        top: 60px;
+        font-size: 24px;
+        animation: banner 2s;
     }
     .banner img {
         position: absolute;
@@ -973,7 +948,7 @@ button {
         margin-top: 17px;
         padding: 0 36px;
         width:984px;
-        height:793px;
+        min-height:793px;
         background:rgba(255,255,255,1);
         border-radius:23px;
         border:2px solid rgba(180,160,160,1);
@@ -1025,10 +1000,12 @@ button {
         margin: 0 9px;
         cursor: pointer;
     }
-    .message .message_main_fill button:last-of-type {
+    .message .message_main_fill .button_login {
         background-color: #C6544C;
     }
-
+    .message .message_main_fill .button_send {
+        display: none;
+    }
     /*list*/
     .message .message_main_list {
         border-top: 1px solid grey;
@@ -1064,6 +1041,7 @@ button {
         background-color: #B4A0A0;
         text-align: center;
         cursor: pointer;
+        opacity: 0.5;
     }
     .message .message_main_list_box>span::before{
         position: absolute;
@@ -1083,7 +1061,6 @@ button {
     .message_main_list_box div p{
         margin-top: 10px;
         width:709px;
-        height:19px;
         font-size:14px;
         color:rgba(90,50,60,1);
         line-height:19px;
@@ -1285,6 +1262,7 @@ button {
     }
 }
 /************************************************/
+/*动态添加*/
 .aside_fix {
     position: fixed !important;
     margin-top: 0;
@@ -1297,4 +1275,7 @@ button {
     top: 72px;
     width: 360px;
     z-index: 99;
+}
+.liked {
+    opacity: 1 !important;
 }
