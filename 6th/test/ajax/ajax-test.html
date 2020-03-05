@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .container {
+        background: #eee;
+        width: 600px;
+        height: 1000px;
+        margin: 0 auto;
+    }
+
+    .sticky-box {
+        position: -webkit-sticky;
+        position: sticky;
+        height: 60px;
+        margin-bottom: 30px;
+        background: #ff7300;
+        top: 0px;
+    }
+
+    div {
+        font-size: 30px;
+        text-align: center;
+        color: #fff;
+        line-height: 60px;
+    }
+</style>
+
+<body>
+
+    <body>
+        <div class="container">
+            <div class="sticky-box">内容1</div>
+            <div class="sticky-box">内容2</div>
+            <div class="sticky-box">内容3</div>
+            <div class="sticky-box">内容4</div>
+        </div>
+    </body>
+    <script>
+        /*
+        //网上看来的代码 实测可用
+        //没有看懂下面设置的 window["callback"] 具体含义
+        //直接设一个函数应该也可以的 为何绑定在window对象上
+        //
+        //经过测试之后得出callback函数似乎确实要绑定在window对象上
+        //否则php端无法读取callback函数
+        //
+        //
+        //定义一个发送Jsonp请求的函数
+        function jsonp(obj) {
+            //定义一个处理Jsonp返回数据的回调函数
+            window["callback"] = function (object) {
+                obj.success(JSON.parse(object));
+            }
+            var script = document.createElement("script");
+            //组合请求URL
+            script.src = obj.url + "?fn=callback";
+            //将创建的新节点添加到BOM树上
+            document.getElementsByTagName("body")[0].appendChild(script);
+        }
+
+        //调用Jsonp函数发送jsonp请求
+        jsonp({
+            url: "./ajax-test.php",
+            success: function (obj) {
+                console.log(obj);
+            }
+        });
+        */
+
+
+        /*
+        //自己写的jsonp跨域测试 实测可用
+        //jsonp似乎可以模拟ajax的get方法 另外还可以跨域
+        //虽然好像还是要开启本地服务器才行
+        //windows文件管理系统的情况下还是不行的
+        const jsonp=()=>{
+            //此处需绑定回调函数callback在window上
+            //如果并非封装为函数 则直接var声名即可
+            window.callback = (obj) => {
+            console.log(JSON.parse(obj));
+        }
+        //之前试了很久都没反应 以为是什么问题
+        //结果是createElement的元素名字打成了srcipt。。。。（script）
+        //const js = document.createElement('srcipt');这里打错了
+        const js = document.createElement('script');
+        js.setAttribute('src', './ajax-test.php?fn=callback');
+        document.body.appendChild(js);
+        }
+        //此处 当jsonp行为封装成函数时 callback对象就要绑在window对象上
+        //否则php无法读取
+        setInterval(() => {
+            jsonp();
+        }, 1000);
+        */
+        const debounce = (func, delay, imm) => {
+            let timeout = null;
+            return function (...args) {
+                if (timeout) {
+                    clearTimeout(timeout);
+                    console.log('防抖触发');
+                }
+                if (imm) {
+                    if (!timeout) {
+                        func.apply(this, args);
+                    }
+                    timeout = setTimeout(() => {
+                        timeout = null;
+                    },delay)
+                } else {
+                    timeout = setTimeout(() => {
+                        func.apply(this, args);
+                        timeout = null;
+                    }, delay);
+                }
+            }
+        }
+        const a = () => {
+            console.log(2)
+        }
+        let b = debounce(a, 1000,1);
+        document.body.onclick = () => {
+            b()
+        }
+    </script>
+    <script src="./ajax-test.js"></script>
+</body>
+
+</html>
