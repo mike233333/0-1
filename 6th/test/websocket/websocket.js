@@ -11,7 +11,8 @@ wss.on('connection', function (ws) {
   })
 });
 //websocket
-//注意websocket也是服务器 不需要再开一个http的服务器了
+//注意websocket也是服务器
 //只需要在本地的文件管理直接打开客户端发送websocket的html文件就可以读到
-//如果开一个localhost会和websocket堵塞 毕竟这也是服务器
+//如果开一个localhost服务器再打开html也是可行的 但是不能和ws使用同一个端口
+//即不能为8181 否则
 //会返回什么200 404之类的错误

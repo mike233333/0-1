@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            //websocket部分
+            const websocket=new WebSocket('ws://localhost:8181');
+            websocket.onopen=function(){
+                console.log("Connection open ..."); 
+                websocket.send('hello server!');
+            }
+            websocket.onmessage=function(ev){
+                console.log('receive data '+ev.data);
+                websocket.close();
+            }
+            websocket.onclose=function(){
+                console.log('close');
+            }
+            //ajax部分
+            fetch('http://localhost:8888/ajax.js',{
+                method:'POST',
+                body:"name=mike"
+            })
+            .then(function(res){
+                return res.text();
+            }).then(function(text){
+                console.log(text)
+            })
+        </script>
+    </body>
+</html>
