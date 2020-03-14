@@ -6,3 +6,6 @@ and i didn't know the create-react-app i used to build react program until now, 
 update webpack-dev-server and webpack hmr. create-react-app is auto configure it. and i think configure it by myself is also necessary.<br>
 ----------------------------------3rd commit--------------------------------------------<br>
 update and keep learning<br>
+----------------------------------4th commit--------------------------------------------<br>
+update electron-test<br>
+the first time writing a working exe file. i am so highhhhhhhhhhhhhhhhhhh!<br>
