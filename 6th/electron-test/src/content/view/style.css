@@ -1,0 +1,29 @@
+.taskNameButtonInDisplay {
+    position: absolute;
+    right: 0;
+}
+.taskNameInEdit {
+    display: flex;
+}
+.taskNameInEditInput {
+    flex:1;
+    margin:16px 0
+}
+.taskNameTitle {
+    position: relative;
+    min-height: 300px;
+    margin-left: 30px;
+    line-height: 64px;
+}
+.contentHeader {
+    background-color: white;
+    padding: 0;
+    border-bottom:1px solid #f0f0f0;
+}
+.contentHeader2 {
+    background-color: white;
+    padding: 0;
+}
+.taskTime {
+    margin: 16px 0;
+}

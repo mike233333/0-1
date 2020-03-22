@@ -5,12 +5,17 @@
   "main": "main.js",
   "homepage": ".",
   "//": "自定义Dev键 用来让main.js识别仙子啊是开发阶段还是发布阶段",
-  "Dev": false,
+  "Dev": true,
   "dependencies": {
     "@babel/core": "7.6.0",
     "@svgr/webpack": "4.3.2",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.2",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
+    "antd": "^4.0.2",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
@@ -21,6 +26,7 @@
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "5.1.0",
+    "electron": "8.1.1",
     "eslint": "^6.1.0",
     "eslint-config-react-app": "^5.0.2",
     "eslint-loader": "3.0.2",
@@ -63,8 +69,7 @@
     "webpack": "4.41.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.1.1",
-    "workbox-webpack-plugin": "4.3.1",
-    "electron": "8.1.1"
+    "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -90,7 +95,10 @@
   },
   "devDependencies": {
     "electron-packager": "^14.2.1",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3"
   },
   "jest": {
     "roots": [

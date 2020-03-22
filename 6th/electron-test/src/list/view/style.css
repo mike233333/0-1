@@ -1,0 +1,18 @@
+.list {
+    overflow: auto;
+}
+.listFoot {
+    position:'fixed';
+    bottom:'0px';
+    width:'199px';
+}
+.ul1 {
+    overflow: auto;
+}
+.listDiv {
+    position: fixed;
+    bottom: 0;
+}
+#list {
+    padding-bottom: 90px;
+}
