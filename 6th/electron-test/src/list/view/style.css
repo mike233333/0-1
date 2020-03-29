@@ -1,6 +1,9 @@
 .list {
     overflow: auto;
 }
+#list {
+    padding-bottom: 90px;
+}
 .listFoot {
     position:'fixed';
     bottom:'0px';
@@ -13,6 +16,6 @@
     position: fixed;
     bottom: 0;
 }
-#list {
-    padding-bottom: 90px;
+.listDiv li {
+    background-color: white !important;
 }

@@ -17,7 +17,8 @@ export interface SingleStateTask {
     title: string,
     time: string,
     done: boolean,
-    content: string
+    content: string,
+    [name:string]:any
 }
 export interface SingleStateList {
     id:number,
@@ -37,7 +38,10 @@ export interface ContentThisState {
     title: string,
     time: string,
     content: string,
-    [key: string]: string
+    [key: string]: any,
+    parentId: number,
+    taskId: number,
+    done: boolean
 }
 export interface OnFinishFilter {
     (target: SingleStateTask,id: number,selected: number):void
@@ -73,6 +77,9 @@ export interface ClearSelected {
 export interface CalTask {
     (state:{[name:string]:any},bool:boolean):number
 }
+export interface FindCatName {
+    (id:number,data:[SingleStateList]):string
+}
 //action
 export interface AddCat {
     (name:string,id:number):{type:string,id:number,catName:string,selectedId:number}
@@ -97,6 +104,9 @@ export interface RenderTree {
 }
 export interface SearchTask {
     (id:number,task:[SingleStateTask],filter:string):any
+}
+export interface ClearSelectedTask {
+    (event:React.MouseEvent<HTMLDivElement,MouseEvent>,value:null):void
 }
 //action
 export interface TaskAction{

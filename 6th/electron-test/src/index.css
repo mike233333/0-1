@@ -19,3 +19,8 @@ code {
 body {
   overflow: auto;
 }
+.clearButton {
+  position: absolute;
+  right: 0;
+  top: 15px;
+}

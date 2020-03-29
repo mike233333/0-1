@@ -4,8 +4,14 @@ import { reducer as contentReducer } from './content';
 import { listReducer1, listReducer2 } from './list/reducer';
 import { CombineReducerProp } from './interface';
 
-//初始store
-let initState = JSON.parse(localStorage.getItem('state')!) || {
+//初始化store
+let oldState: Storage = JSON.parse(localStorage.getItem('state')!);
+let bool: boolean = true;
+for (let item in oldState) {
+    if (item!=='selected'&&item!=='selectedTask'&&!oldState[item]) bool = false;
+}
+//判断条件storage中存在state数据且里面没有空项 使用sotrage数据 否则使用初始数据
+let initState = bool&&oldState ? JSON.parse(localStorage.getItem('state')!) : {
     list: [
         //默认分类 id设为0
         {
@@ -59,7 +65,7 @@ export const totalContext: Context<any> = createContext({});
 //combineReducers函数
 export function combineReducers(reducers: CombineReducerProp) {
     return function (state: any = {}, action: any): Reducer<any, any> {
-        const newState:any = {};
+        const newState: any = {};
         Object.keys(reducers).forEach(key => {
             const childState = state[key];
             newState[key] = reducers[key](childState, action);
@@ -68,7 +74,7 @@ export function combineReducers(reducers: CombineReducerProp) {
     }
 }
 
-export const Providers = (props:ProviderProps<JSX.Element>) => {
+export const Providers = (props: ProviderProps<JSX.Element>) => {
     const [state, dispatch] = useReducer(reducers, initState);
     return (
         <totalContext.Provider value={{ state, dispatch }}>
