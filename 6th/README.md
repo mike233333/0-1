@@ -13,3 +13,7 @@ the first time writing a working exe file. i am so highhhhhhhhhhhhhhhhhhh!<br>
 ----------------------------------5th commit--------------------------------------------<br>
 update electron-test<br>
 use antd and typescript in program.<br>
+----------------------------------6th commit--------------------------------------------<br>
+update electron-test and questionnaire<br>
+update a month apart, and maybe it is the last few updates.<br>
+my new life is probably over.<br>
