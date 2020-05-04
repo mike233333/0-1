@@ -12,12 +12,17 @@ const Task = ({ }) => {
             <Filter />
             <TaskList />
             <Menu.Item onClick={() => {
-                dispatch(removeTask(state.selectedTask));
-                message.success('删除任务成功');
+                if (typeof state.selectedTask ==='number') {
+                    dispatch(removeTask(state.selectedTask));
+                    message.success('删除任务成功');
+                } else {
+                    message.error('请选择要删除的任务');
+                }
             }} style={{ position: 'fixed', bottom: '40px', width: '206px', borderTop: '1px solid #f0f0f0' }}>删除任务</Menu.Item>
             <Menu.Item style={{ position: 'fixed', bottom: '0px', width: '206px', borderTop: '1px solid #f0f0f0' }} onClick={() => {
                 dispatch(edit());
                 dispatch(thingSelected(null));
+                message.info('请输入任务内容');
             }}>添加任务</Menu.Item>
         </Menu>
     )

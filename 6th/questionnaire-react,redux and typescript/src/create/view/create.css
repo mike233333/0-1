@@ -1,4 +1,12 @@
-.create-1{
+.create1 {
+    display: flex;
+    height: 100%;
+}
+.create2 {
+    display: block;
+    height: 100%;
+}
+.create2-1{
     /*display: none;*/
     position: relative;
     width: 700px;
@@ -7,160 +15,58 @@
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
 }
-.create-1 .create-title{
+.create2-1 .create-title{
     border-bottom: 1px solid grey;
     text-align: center;
     padding-bottom: 10px;
 }
-.create-1 .create-title input{
+.create2-1 .create-title input{
     width: 600px;
     text-align: center;
     font-size: 2rem;
 }
-.create-2{
-    margin-top: 200px;
-    text-align: center;
-    font-size: 2rem;
-}
-.create-2 input{
-    margin-top: 50px;
-    border: 1px solid black;
-    transition: all .5s;
-    background-color: inherit;
-    padding: 20px 200px;
-    outline: none;
-    font-size: 1.5rem;
-}
-.create-2 input:hover{
-    background-color: rgba(255, 0, 0, 0.5);
-}
-.queAll{
-    margin: 10px 0;
-}
-.queAll li{
-    border-bottom: 1px solid grey;
-    padding: 5px 0;
-}
-.queAll li>*{
-    margin-bottom: 5px;
-}
-.queAll li>input{
-    width: 600px;
-    font-size: 1.2rem;
-}
-.queAll .addOpt{
-    margin: 5px 0;
-    text-align: center;
-    font-size: .8rem;
-    transition: all .5s;
-}
-.queAll .addOpt:hover{
-    background-color: rgba(255, 0, 0, 0.5);
-}
-.queAll li textarea{
-    resize: none;
-    width: 500px;
+.create1-1 button {
+    transform: scale(2);
 }
 .create-controller{
     display: flex;
 }
-.create-controller span{
-    transition: all .5s;
-    flex: 1;
-    text-align: center;
-    padding: 5px 0;
-}
-.create-controller span:hover{
-    background-color: rgba(255, 0, 0, 0.5);
-}
-.create-add ul{
-    display: flex;
-    margin-top: 10px;
-}
-.create-add li{
-    transition: all .5s;
-    flex: 1;
-    text-align: center;
-    border: 1px solid black;
-    margin: 10px 1px;
-    padding: 10px 0;
-}
-.create-add li:hover{
-    background-color: rgba(255, 0, 0, 0.5);
-}
-.create-foot{
-    display: flex;
-    margin: 20px 0;
-}
-.create-foot>*{
-    flex: 1;
-    text-align: center;
-}
-.create-foot input[type=button]{
-    border: 1px solid black;
-    transition: all .5s;
-    background-color: white;
-    padding: 2px 20px;
-    outline: none;
-}
-.create-foot input[type=button]:hover{
-    background-color: rgba(255, 0, 0, 0.5);
-}
-.calendarTable{
-    position: absolute;
-    background-color: white;
-    border: 1px solid grey;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-}
-.calendar {
-    border-spacing: 0;
-    border-collapse: collapse;
-}
-
-.calendar td {
-    width: 3vw;
-    height: 3vw;
-    text-align: center;
-    border: 1px solid black;
-    cursor: pointer;
-}
-
-.calendar {
-    width: 30vw;
-    text-align: center;
-}
-
-.calendarTable div {
-    margin: 1vw 5vw 0 5vw;
-    width: 22vw;
-}
-
-.calendar thead td {
-    border: none;
-}
-
-.calendar td:hover {
-    background-color: grey;
-}
-
-.selected {
-    background-color: green;
-}
-
-.create-2{
-    margin-top: 200px;
+.create1-1{
+    margin: auto;
     text-align: center;
     font-size: 2rem;
 }
-.create-2 input{
-    margin-top: 50px;
-    border: 1px solid black;
-    transition: all .5s;
-    background-color: inherit;
-    padding: 20px 200px;
-    outline: none;
-    font-size: 1.5rem;
+/**/
+.checkbox label {
+    margin-right: 10px;
 }
-.create-2 input:hover{
-    background-color: rgba(255, 0, 0, 0.5);
+.checkboxInput {
+    width: auto;
+}
+.create-add{
+    display: flex;
+    width: 100%;
+}
+.create-add>* {
+    flex: 1;
+}
+.calendar {
+    width: 300px;
+    position: absolute;
+    border: 1px solid #d9d9d9;
+}
+.create-foot {
+    display: flex;
+    margin: 20px 0 0 0;
+    justify-content: space-around;
+}
+.que>* {
+    margin-bottom: 5px;
+}
+.controller {
+    display: flex;
+    width: 100%;
+}
+.controller>* {
+    flex: 1;
 }

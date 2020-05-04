@@ -37,7 +37,7 @@ class Canvas extends Component<iCanvas> {
         var num = 500 / (+len + 1);
         var count = 1;
         for (let i in data) {
-            obj.fillStyle = 'red';
+            obj.fillStyle = '#1890ff';
             obj.fillRect(num * count + 25, 50 + 220 * (1 - data[i] / submitCount), 50, 220 * data[i] / submitCount);
             count++;
         }

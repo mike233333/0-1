@@ -5,4 +5,6 @@ const EditItem = 'Item/Edit';
 const ScanItem = 'Item/Scan';
 const FillItem = 'Item/Fill';
 
-export { NewItem, RemoveItem, EditItem, ScanItem, FillItem };
+const updateDataTime = 'Data/UpdateTime';
+
+export { NewItem, RemoveItem, EditItem, ScanItem, FillItem, updateDataTime };

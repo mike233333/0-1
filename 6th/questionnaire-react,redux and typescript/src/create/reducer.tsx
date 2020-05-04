@@ -1,18 +1,21 @@
 import * as actionTypes from './actionTypes';
 import * as actionTypesInList from '../list/actionTypes';
-import { action1, que1, emptyObj, opt1, emptyArr, data1 } from '../interface';
-
-const createReducer = (state = [], action: action1) => {
+import { singleData, singleOpt, singleQue } from '../interface';
+import { message } from 'antd';
+interface reducerInCreate {
+    (state: Array<any>, action: { type: string, [name: string]: any }): any
+}
+const createReducerQue: reducerInCreate = (state = [], action) => {
     switch (action.type) {
         case actionTypes.AddQue: {
             let count = 0;
-            state.map((item: que1) => {
+            state.map((item) => {
                 if (item.parId === action.parentId) {
                     count++;
                 };
             });
             if (count >= 10) {
-                console.log('问题最多十个');
+                message.error('问题最多十个');
                 return false;
             }
             return [
@@ -29,7 +32,7 @@ const createReducer = (state = [], action: action1) => {
             ];
         }
         case actionTypes.RemoveQue: {
-            return state.filter((item: que1) => {
+            return state.filter((item) => {
                 if (item.parId === action.parentId && item.order === action.index) {
                     return false;
                 } else {
@@ -40,12 +43,12 @@ const createReducer = (state = [], action: action1) => {
         case actionTypes.UpQue: {
             //先把目标问题取出 然后插入过滤掉该问题的新数组
             let arr = JSON.parse(JSON.stringify(state));
-            let obj: emptyObj = {}, obj2: emptyObj = {};
+            let obj: any = {}, obj2: any = {};
             if (action.index === 0) {
                 console.log('上面没了');
                 return arr;
             }
-            arr.forEach((item: que1, index: number) => {
+            arr.forEach((item: singleQue, index: number) => {
                 if (item.parId === action.parentId && item.order === action.index) {
                     obj = arr[index];
                 }
@@ -55,12 +58,12 @@ const createReducer = (state = [], action: action1) => {
             });
             obj.order--;
             obj2.order++;
-            arr.forEach((item: que1) => {
+            arr.forEach((item: singleQue) => {
                 if (item.parId === action.parentId && item.order === action.index) {
                     item = obj;
                 }
             });
-            arr.forEach((item: any) => {
+            arr.forEach((item: singleQue) => {
                 if (item.parId === action.parentId && item.order === action.index! - 1) {
                     item = obj2;
                 }
@@ -69,12 +72,12 @@ const createReducer = (state = [], action: action1) => {
         }
         case actionTypes.DownQue: {
             let arr = JSON.parse(JSON.stringify(state));
-            let obj: emptyObj = {}, obj2: emptyObj = {};
+            let obj: any = {}, obj2: any = {};
             if (action.index === arr.length - 1) {
                 console.log('下面没了');
                 return arr;
             }
-            arr.forEach((item: que1, index: number) => {
+            arr.forEach((item: singleQue, index: number) => {
                 if (item.parId === action.parentId && item.order === action.index) {
                     obj = arr[index];
                 }
@@ -84,12 +87,12 @@ const createReducer = (state = [], action: action1) => {
             });
             obj.order++;
             obj2.order--;
-            arr.forEach((item: que1) => {
+            arr.forEach((item: singleQue) => {
                 if (item.parId === action.parentId && item.order === action.index) {
                     item = obj;
                 }
             });
-            arr.forEach((item: que1) => {
+            arr.forEach((item: singleQue) => {
                 if (item.parId === action.parentId && item.order === action.index! + 1) {
                     item = obj2;
                 }
@@ -98,12 +101,12 @@ const createReducer = (state = [], action: action1) => {
         }
         case actionTypes.CopyQue: {
             let arr = JSON.parse(JSON.stringify(state));
-            let obj: emptyObj = {};
+            let obj: any = {};
             if (arr.length === 10) {
                 console.log('问题最多十个');
                 return arr;
             }
-            arr.forEach((item: que1) => {
+            arr.forEach((item: singleQue) => {
                 if (item.parId === action.parentId && item.order === action.index) {
                     obj = item;
                 }
@@ -113,7 +116,7 @@ const createReducer = (state = [], action: action1) => {
             return arr;
         }
         case actionTypes.UpdateQue: {
-            return state.map((item: que1) => {
+            return state.map((item) => {
                 if (item.parId === action.id && item.order === action.index) {
                     return { ...item, question: action.content };
                 } else {
@@ -122,7 +125,7 @@ const createReducer = (state = [], action: action1) => {
             });
         }
         case actionTypes.UpdateWord: {
-            return state.map((item: que1) => {
+            return state.map((item) => {
                 if (item.parId === action.id && item.order === action.index) {
                     return { ...item, answer: action.answer };
                 } else {
@@ -131,7 +134,7 @@ const createReducer = (state = [], action: action1) => {
             });
         }
         case actionTypes.FillQue: {
-            return state.map((item: que1) => {
+            return state.map((item) => {
                 if (item.parId === action.id && item.order === action.index) {
                     return { ...item, answer: [...item.answer!, action.answer] };
                 } else {
@@ -140,7 +143,7 @@ const createReducer = (state = [], action: action1) => {
             })
         }
         case actionTypes.JustQueOrder: {
-            return state.map((item: que1) => {
+            return state.map((item) => {
                 if (item.parId === action.id && item.order! > action.index!) {
                     return { ...item, order: item.order! - 1 };
                 }
@@ -152,16 +155,19 @@ const createReducer = (state = [], action: action1) => {
     }
 }
 
-const createReducer2 = (state = [], action: action1) => {
+const createReducerOpt: reducerInCreate = (state = [], action) => {
     switch (action.type) {
         case actionTypes.AddOpt: {
-            let index: number = 0;
-            state.forEach((item: opt1) => {
+            let index = 0;
+            state.forEach((item) => {
                 if (item.parId === action.parentId && item.order === action.parIndex) {
                     index++;
                 }
             })
-            if (index === 4) return state;
+            if (index === 4) {
+                message.error('选项已满');
+                return state;
+            };
             return [
                 ...state,
                 {
@@ -174,23 +180,33 @@ const createReducer2 = (state = [], action: action1) => {
             ]
         }
         case actionTypes.RemoveOpt: {
-            let arr = state.filter((item: opt1) => {
+            let arr = state.filter((item) => {
                 if (item.parId === action.parentId && item.order === action.parIndex) {
                     return item.index !== action.index;
                 } else {
                     return true;
                 }
             });
-            arr.forEach((item: opt1) => {
+            arr.forEach((item) => {
                 if (item.parId === action.parentId && item.order === action.parIndex) {
                     if (item.index >= action.index!) item.index--;
                 }
             })
             return arr;
         }
+        case actionTypes.RemoveAllOpt: {
+            let arr = state.filter((item) => {
+                if (item.parId === action.parentId && item.order === action.parIndex) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+            return arr;
+        }
         case actionTypes.UpOpt: {
-            let obj: emptyArr = [], obj2: emptyArr = [];
-            let arr: Array<any> = state.filter((item: opt1) => {
+            let obj: any = [], obj2: any = [];
+            let arr = state.filter((item: singleOpt) => {
                 if (item.parId === action.parentId && item.order === action.parIndex) {
                     obj.push(item);
                     return false;
@@ -200,18 +216,18 @@ const createReducer2 = (state = [], action: action1) => {
                 }
                 return true;
             });
-            obj.forEach((item: opt1) => {
+            obj.forEach((item: singleOpt) => {
                 item.order--;
             });
-            obj2.forEach((item: opt1) => {
+            obj2.forEach((item: singleOpt) => {
                 item.order++;
             })
             arr.push(...obj, ...obj2);
             return arr;
         }
         case actionTypes.DownOpt: {
-            let obj: emptyArr = [], obj2: emptyArr = [];
-            let arr: Array<any> = state.filter((item: opt1) => {
+            let obj: any = [], obj2: any = [];
+            let arr = state.filter((item) => {
                 if (item.parId === action.parentId && item.order === action.parIndex) {
                     obj.push(item);
                     return false;
@@ -221,17 +237,17 @@ const createReducer2 = (state = [], action: action1) => {
                 }
                 return true;
             });
-            obj.forEach((item: opt1) => {
+            obj.forEach((item: singleOpt) => {
                 item.order++;
             });
-            obj2.forEach((item: opt1) => {
+            obj2.forEach((item: singleOpt) => {
                 item.order--;
             })
             arr.push(...obj, ...obj2);
             return arr;
         }
         case actionTypes.UpdateOpt: {
-            return state.map((item: opt1) => {
+            return state.map((item) => {
                 if (item.parId === action.parentId && item.order === action.parIndex && item.index === action.index) {
                     return { ...item, content: action.content };
                 } else {
@@ -240,7 +256,7 @@ const createReducer2 = (state = [], action: action1) => {
             });
         }
         case actionTypes.SubmitOpt: {
-            return state.map((item: opt1) => {
+            return state.map((item) => {
                 if (item.parId === action.parentId && item.order === action.parIndex && item.index === action.index) {
                     if (item.count + action.number! < 0) {
                         return item;
@@ -253,7 +269,7 @@ const createReducer2 = (state = [], action: action1) => {
             });
         }
         case actionTypes.FillOpt: {
-            return state.map((item: opt1) => {
+            return state.map((item) => {
                 if (item.parId === action.id && item.order === action.order && item.index === action.index) {
                     return { ...item, count: item.count + action.count! };
                 } else {
@@ -265,22 +281,22 @@ const createReducer2 = (state = [], action: action1) => {
             return state;
     }
 }
-const createReducer3 = (state = [], action: action1) => {
+const createReducerData: reducerInCreate = (state = [], action) => {
     switch (action.type) {
         case actionTypes.SaveQue:
-            return state.map((item: data1) => {
+            return state.map((item) => {
                 return item.id === action.id ? { ...item, state: 'ready' } : item;
             });
         case actionTypes.SubmitQue:
-            return state.map((item: data1) => {
+            return state.map((item) => {
                 return item.id === action.id ? { ...item, state: 'publish' } : item;
             });
         case actionTypes.RemoveItem:
-            return state.filter((item: data1) => {
+            return state.filter((item) => {
                 return item.id !== action.id;
             });
         case actionTypes.NewItem:
-            if (state.find((item: data1) => item.id === action.id)) {
+            if (state.find((item) => item.id === action.id)) {
                 return state;
             }
             return [
@@ -293,8 +309,12 @@ const createReducer3 = (state = [], action: action1) => {
                     submit: 0
                 }
             ];
+        case actionTypes.updateDataTime:
+            return state.map(item => {
+                return item.id === action.id ? { ...item, state: action.nowState } : item;
+            });
         case actionTypes.AddCount:
-            return state.map((item: data1) => {
+            return state.map((item) => {
                 return item.id === action.id ? { ...item, submit: item.submit! + 1 } : item;
             });
         default:
@@ -302,7 +322,7 @@ const createReducer3 = (state = [], action: action1) => {
     }
 }
 
-const createReducer4 = (state = [], action: action1) => {
+const createReducerQueId: reducerInCreate = (state = [], action) => {
     switch (action.type) {
         case actionTypes.ChangeQue:
             return action.id;
@@ -310,4 +330,4 @@ const createReducer4 = (state = [], action: action1) => {
             return state;
     }
 }
-export { createReducer, createReducer2, createReducer3, createReducer4 };
+export { createReducerQue, createReducerOpt, createReducerQueId, createReducerData };

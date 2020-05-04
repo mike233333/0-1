@@ -1,26 +1,26 @@
 import React, { JSXElementConstructor } from 'react';
 import * as actionTypes from '../actionTypes';
 import { updateOpt } from '../action';
+import { Input, Radio, Button, Checkbox } from 'antd';
+import { OptProps } from '../../interface';
 
-interface OptProps {
-    removeOpt: any;
-    type: string;
-    [name: string]: any;
-}
-const Option: React.FC<OptProps> = ({ removeOpt, type, updateOpt,content }) => {
+const Option: React.SFC<OptProps> = ({ index, removeOpt, type, updateOpt, content }) => {
     switch (type) {
         case 'single':
             return (
                 <div>
-                    <input type="radio" /><input type="text" placeholder="选项内容" defaultValue={content} onChange={updateOpt} />
-                    <input type="button" value="X" onClick={removeOpt} />
+                    <Radio value={index}>
+                        <Input placeholder='选项内容' defaultValue={content} onChange={updateOpt}></Input>
+                        <Button onClick={removeOpt}>X</Button>
+                    </Radio>
                 </div>
             )
         case 'multi':
             return (
-                <div>
-                    <input type="checkbox" /><input type="text" placeholder="选项内容" defaultValue={content} onChange={updateOpt} />
-                    <input type="button" value="X" onClick={removeOpt} />
+                <div className='checkbox'>
+                    <Checkbox></Checkbox>
+                    <Input placeholder='选项内容' className='checkboxInput' defaultValue={content} onChange={updateOpt}></Input>
+                    <Button onClick={removeOpt}>X</Button>
                 </div>
             )
         default:

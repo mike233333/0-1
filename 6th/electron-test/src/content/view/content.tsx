@@ -37,8 +37,10 @@ const Content = () => {
         if (target.title.length > 10 || target.time.search(/^\d{4}-\d{2}-\d{2}$/) === -1 || target.content.length === 0) {
             message.error('内容格式错误');
             return false;
+        }else{
+            message.success('操作任务成功');
         };
-        console.log(id, selected)
+        console.log(id, selected);
         dispatch(actions.addTask(target, id, selected));
         dispatch(actions.display());
     }
@@ -50,7 +52,14 @@ const Content = () => {
                         <div>
                             <span className='taskNameTitle'>{target!.title}</span>
                             <span className='taskNameButtonInDisplay'>
-                                <Button onClick={() => taskId || taskId === 0 ? dispatch(actions.edit()) : []}>编辑</Button>
+                                <Button onClick={() => {
+                                    if(typeof taskId==='number'){
+                                        dispatch(actions.edit());
+                                        message.info('进入编辑状态');
+                                    }else{
+                                        message.error('请选择要编辑的任务');
+                                    }
+                                }}>编辑</Button>
                                 <Button onClick={() => {
                                     message.success('状态变更成功');
                                     dispatch(actions.toggle(taskId, true));
@@ -65,10 +74,12 @@ const Content = () => {
                             <div className='taskNameInEdit'>
                                 <Input className='taskNameInEditInput' type="text" placeholder="可输入十个字符以内" onChange={(event) => onInputChange(event, 'title')} defaultValue={target!.title} style={{ width: 'auto' }} />
                                 <span>
-                                    <Button onClick={() => dispatch(actions.display())}>取消</Button>
+                                    <Button onClick={() => {
+                                        dispatch(actions.display());
+                                        message.info('退出编辑状态');
+                                    }}>取消</Button>
                                     <Button onClick={() => {
                                         onFinishFilter(target!, id, taskId);
-                                        message.success('操作任务成功');
                                     }}>确认</Button>
                                 </span>
                             </div>

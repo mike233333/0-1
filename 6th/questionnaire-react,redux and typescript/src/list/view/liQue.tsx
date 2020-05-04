@@ -1,21 +1,38 @@
 import React from 'react';
+import { List, Checkbox, Row, Col, Button } from 'antd';
+
 
 interface iLiQue {
-    id: number;
-    state: string;
-    name: string;
     [name: string]: any;
 }
-
-const LiQue = ({ id, state, name, editQue, scanData, fillQue }: iLiQue) => {
+const LiQue = ({ id, state, name, editQue, scanData, fillQue, checked, changeChecked, list, changeList }: iLiQue) => {
     return (
-        <tr data-id={id}>
-            <td><input type="checkbox" /></td>
-            <td><span>{name}</span></td>
-            <td><span>{state}</span></td>
-            {state === 'ready' ? <td><input className="edit" type="button" value="编辑" onClick={editQue} /><input type="button" value="查看" onClick={fillQue} /></td> :
-                <td><input className="edit" type="button" value="数据" onClick={scanData} /><input type="button" value="查看" onClick={fillQue} /></td>}
-        </tr>
+        <Row data-id={id}>
+            <Col span={4}>
+                <Checkbox onChange={event => event.target.checked ? (changeChecked(checked + 1), changeList([...list, id])) :
+                    (changeChecked(checked - 1), changeList(list.filter((item: number) => item !== id)))}></Checkbox>
+            </Col>
+            <Col span={6}>{name}</Col>
+            <Col span={6}>{state}</Col>
+            <Col span={8}>
+                {state === 'ready' ? (
+                    <div>
+                        <Button onClick={editQue}>编辑</Button>
+                    </div>
+                ) : state === 'publish' ?
+                        (
+                            <div>
+                                <Button onClick={scanData}>数据</Button>
+                                <Button onClick={fillQue}>填写</Button>
+                            </div>
+                        ) : (
+                            <div>
+                                <Button onClick={scanData}>数据</Button>
+                            </div>
+                        )
+                }
+            </Col>
+        </Row>
     )
 }
 

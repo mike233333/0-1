@@ -23,3 +23,9 @@ export const removeItem = (id: number) => ({
     type: actionTypesInCreate.RemoveItem,
     id: id
 });
+
+export const updateDate=(id:number,nowState:string)=>({
+    type:actionTypes.updateDataTime,
+    id:id,
+    nowState:nowState
+})

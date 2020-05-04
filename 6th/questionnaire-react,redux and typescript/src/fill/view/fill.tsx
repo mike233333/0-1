@@ -1,140 +1,137 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useEffect, useState } from 'react';
 import Que from './que';
 import './fill.css';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { SubmitQue, FillQue, FillOpt, AddCount } from '../action';
+import { totalContext } from '../../Store';
+import { List, Input, message } from 'antd';
+import { singleQue, FilterQue, FilterData, singleData, FilterSingleData } from '../../interface';
+import { clearQue } from '../../create/action';
 
-interface icreate {
-    que: any;
-    [name: string]: any;
+const filterQue: FilterQue = (que, id) => {
+    let arr: Array<singleQue> = [];
+    que.forEach((item: singleQue) => {
+        if (id !== null && item.parId === id) {
+            arr.push(item);
+        }
+    });
+    arr.sort((a: singleQue, b: singleQue) => {
+        return a.order - b.order;
+    })
+    return arr;
 }
+const filterData: FilterData = (data, id) => {
+    let bool: boolean = true;
+    data.forEach((item: singleData) => {
+        if (id !== null && item.id === id) {
+            bool = item.state !== 'done' ? true : false;
+        }
+    });
+    return bool;
+}
+const filterSingleData: FilterSingleData = (data, nowQueId) => {
+    let obj: any = {};
+    data.forEach((item: singleData) => {
+        if (item.id === nowQueId) {
+            obj = item;
+        }
+    });
+    return obj;
+}
+const Fill = () => {
+    const { state, dispatch } = useContext(totalContext);
+    const { data, que, nowQueId } = state;
+    const nowData = filterSingleData(data, nowQueId);
 
-class Fill extends Component<icreate> {
-    optData: [any?];
-    queData: [any?];
-    bool: boolean;
-    constructor(props: icreate) {
-        super(props);
-        this.optData = [];
-        this.queData = [];
-        this.bool = true;
-    }
-    mustCheck(bool: boolean) {
-        this.bool = bool;
-    }
-    getCompoData() {
-        return function (this: any, ...arr: [any?]) {
+    const [queData, changeQueData] = useState([]);
+    const [optData, changeOptData] = useState([]);
+    const [bool, changeBool] = useState(true);
+
+    const getCompoData = () => {
+        return function (this: any, arr: any) {
             //必须在函数内新建并引用this的两个数组 否则for循环内无法读取
-            let arr1 = this.optData, arr2 = this.queData;
+            let arr1: any = [...optData], arr2: any = [...queData];
             for (let i of arr) {
                 if (i.type) {
                     let num = arr2.findIndex((item: any) => item.parId === i.parId && item.order === i.order);
                     num !== -1 ? arr2[num] = i : arr2.push(i);
                 } else {
-                    let num = arr1.findIndex((item: any) => item.parId === i.parId && item.order === i.order && item.index === i.index);
-                    num !== -1 ? arr1[num] = i : arr1.push(i);
+                    arr1=[i];
                 }
             }
-            this.optData = arr1;
-            this.queData = arr2;
-        }.bind(this)
+            changeOptData(arr1);
+            //queData是提交文字题word的内容 集成在que中
+            changeQueData(arr2);
+        }
     }
-    filterQue(data: any, id: number) {
-        let arr: any = [];
-        data.forEach((item: any) => {
-            if (id !== null && item.parId === id) {
-                arr.push(item);
-            }
-        });
-        arr.sort((a: any, b: any) => {
-            return a.order - b.order;
-        });
-        return arr;
+
+    const mustCheck = (bool: boolean) => {
+        changeBool(bool);
     }
-    getQueState(data: any, id: number) {
-        let str = '';
+
+    const submitAll = (data: any, id: number, queData: any, optData: any, bool: boolean) => {
         data.forEach((item: any) => {
             if (item.id === id) {
-                str = item.state;
+                if (item.state === 'publish') {
+                    if (bool) {
+                        dispatch(SubmitQue());
+                        queData.forEach((item: any) => {
+                            dispatch(FillQue(item.parId, item.order, item.answer));
+                        });
+                        dispatch(AddCount(id));
+                        optData.forEach((item: any) => {
+                            dispatch(FillOpt(item.parId, item.order, item.index, item.count))
+                        });
+                        message.success('提交成功');
+                    } else {
+                        message.error('问卷必填内容空缺，提交无效');
+                    }
+                } else {
+                    message.error('问卷不为发布状态，提交无效');
+                }
+            } else {
             }
         });
-        return str;
+        window.location.hash = '/list';
     }
-    render() {
-        if (this.props.nowQueId === 0) {
-            return (
-                <div className='fill'>
-                    <div className='fill-1'>请选择要填写的问卷</div>
-                </div>
-            )
-        }
+
+    if (nowQueId === 0 || !filterData(data, nowQueId)) {
         return (
-            <div className="fill">
-                <div className="fill-1">
-                    <div className="fill-title">
-                        <p>问卷标题</p>
-                    </div>
-                    <div className='queFill'>
-                        <ul>
-                            {this.filterQue(this.props.que, this.props.nowQueId).map((item: any, index: number) => (
-                                <Que
-                                    getData={this.getCompoData()}
-                                    queType={this.getQueState(this.props.data, this.props.nowQueId)}
-                                    key={this.props.nowQueId + '-' + index}
-                                    item={item}
-                                    index={index}
-                                    mustCheck={this.mustCheck}
-                                />
-                            )
-                            )}
-                        </ul>
-                    </div>
-                    <div className="fill-foot">
-                        <input type="button" value="提交问卷" onClick={() => { 
-                            this.props.submitQue(this.props.data, this.props.nowQueId, this.queData, this.optData,this.bool) }} />
-                    </div>
-                </div>
+            <div className='fill'>
+                <div className='fill-1'>请选择要填写的问卷</div>
             </div>
         )
     }
+    return (
+        <div className="fill">
+            <div className="fill-1">
+                <p className="fill-title">{nowData.name || '未填写'}</p>
+                <List
+                    className='queFill'
+                    itemLayout='vertical'
+                    dataSource={filterQue(que, nowQueId)}
+                    renderItem={(item: singleQue, index: number) => (
+                        <List.Item>
+                            <Que
+                                item={item}
+                                getData={getCompoData()}
+                                index={index}
+                                mustCheck={mustCheck}
+                            />
+                        </List.Item>
+                    )}
+                >
+                </List>
+                <div className="fill-foot">
+                    <Input type="button" value="提交问卷" onClick={() => submitAll(data, nowQueId, queData, optData, bool)} />
+                    <Input type="button" value="返回列表" onClick={() => {
+                        dispatch(clearQue());
+                        window.location.hash = '/list';
+                    }} />
+                </div>
+            </div>
+        </div>
+    )
+
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        data: state.data,
-        que: state.que,
-        nowQueId: state.nowQueId
-    }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        submitQue: (data: any, id: number, queData: [any?], optData: [any?], bool: boolean) => {
-            data.forEach((item: any) => {
-                if (item.id === id) {
-                    if (item.state === 'publish') {
-                        if (bool) {
-                            dispatch(SubmitQue());
-                            queData.forEach((item: any) => {
-                                dispatch(FillQue(item.parId, item.order, item.answer));
-                            });
-                            dispatch(AddCount(id));
-                            optData.forEach((item: any) => {
-                                dispatch(FillOpt(item.parId, item.order, item.index, item.count))
-                            });
-                        } else {
-                            console.log('问卷必填内容空缺，提交无效');
-                        }
-                    } else {
-                        console.log('问卷不为发布状态，提交无效');
-                    }
-                } else {
-                }
-            });
-            window.location.hash = '/list';
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Fill)
+export default Fill;

@@ -1,44 +1,38 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useContext } from 'react';
 import Canvas from './canvas';
-import { connect } from 'react-redux';
-import { dataState, emptyArr, opt1, state } from '../../interface';
+import { singleOpt } from '../../interface';
 
 interface QueItem {
     [name: string]: any;
 }
-class QueItem extends Component<QueItem>{
-    constructor(props: QueItem) {
-        super(props);
-    }
-    selectOpt(data: dataState, id: number, index: number) {
-        let arr: emptyArr = [];
-        data.forEach((item: opt1) => {
+const QueItem:React.FC<any> = ({item,index,count,opt}) => {
+    function selectOpt(data: any, id: number, index: number) {
+        let arr: any = [];
+        data.forEach((item: singleOpt) => {
             if (item.parId === id && item.order === index) {
                 arr.push(item);
             }
         });
         return arr;
     }
-    render() {
-        return (
-            <div>
-                <p>Q{this.props.index + 1}{this.props.item.type == 'single' ? '单选题' : this.props.item.type == 'multi' ? '多选题' : '文字题'}</p>
-                <p>该问题总提交次数为{this.props.count}次</p>
-                <Canvas
-                    type={this.props.item.type}
-                    opt={this.selectOpt(this.props.opt, this.props.item.parId, this.props.item.order)}
-                    que={this.props.item}
-                    count={this.props.count}
-                />
-            </div>
-        )
-    }
+    return (
+        <div>
+            <p>Q{index + 1}{item.type == 'single' ? '单选题' : item.type == 'multi' ? '多选题' : '文字题'}</p>
+            <p>该问题总提交次数为{count}次</p>
+            <Canvas
+                type={item.type}
+                opt={selectOpt(opt, item.parId, item.order)}
+                que={item}
+                count={count}
+            />
+        </div>
+    )
 }
-
-const mapStateToProps = (state: state) => {
+/*
+const mapStateToProps = (state: any) => {
     return {
         opt: state.opt
     }
 }
-
-export default connect(mapStateToProps)(QueItem)
+*/
+export default QueItem;

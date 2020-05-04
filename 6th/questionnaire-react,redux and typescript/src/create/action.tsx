@@ -48,6 +48,12 @@ export const removeOpt = (parIndex: Number, parentId: Number, index: Number) => 
     parentId: parentId,
     index: index
 });
+/**/
+export const removeAllOpt=(parIndex: Number, parentId: Number)=>({
+    type:actionTypes.RemoveAllOpt,
+    parIndex:parIndex,
+    parentId:parentId
+})
 export const updateOpt = (parIndex: Number, parentId: Number, index: Number, content: string) => ({
     type: actionTypes.UpdateOpt,
     parIndex: parIndex,
@@ -71,7 +77,7 @@ export const doneQue = (id: number) => ({
 });
 export const clearQue = () => ({
     type: actionTypes.ChangeQue,
-    id: null
+    id: 0
 });
 export const updateQue = (id: number, index: number, content: string) => ({
     type: actionTypes.UpdateQue,

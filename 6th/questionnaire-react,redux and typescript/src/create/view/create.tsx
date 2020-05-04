@@ -1,115 +1,112 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState, useContext, useEffect } from 'react';
 import './create.css';
 import Que from './que';
-import { connect } from 'react-redux';
-import { addQue, removeQue, upQue, downQue, copyQue, saveQue, submitQue, clearQue, updateQue, createItem, justOrder } from '../action';
-import Calendar from './Calendar.js';
+import { List, Button, Input, Calendar, DatePicker, message } from 'antd';
+import { totalContext } from '../../Store';
 import { newItem } from '../../list/action';
-import { dataState, que1, state } from '../../interface';
-import { Dispatch } from 'redux';
+import { singleQue, arrayData, singleData, arrayQue, FilterQue, FilterData } from '../../interface';
+import { addQue, saveQue, clearQue, submitQue, createItem } from '../action';
 
 
-interface icreate {
-    que: dataState
-    nowQueId: number
-    [name: string]: any
+const filterQue: FilterQue = (que, id) => {
+    let arr: arrayQue = [];
+    que.forEach((item: singleQue) => {
+        if (id !== null && item.parId === id) {
+            arr.push(item);
+        }
+    });
+    arr.sort((a: singleQue, b: singleQue) => {
+        return a.order - b.order;
+    })
+    return arr;
+}
+const filterData: FilterData = (data, id) => {
+    let bool: boolean = true;
+    data.forEach((item: singleData) => {
+        if (id !== null && item.id === id) {
+            bool = item.state === 'ready' ? true : false;
+        }
+    });
+    return bool;
 }
 
-let title = '';
-let deadline = '';
-
-const saveTitle = (event?: ChangeEvent) => {
-    title = (event?.target as HTMLInputElement).value;
-}
-
-const saveDeadline = (event?: ChangeEvent) => {
-    deadline = (event?.target as HTMLInputElement).value;
-}
-
-const win = window;
-const Create = ({ que, nowQueId, addQue, removeQue, upQue, downQue, copyQue, saveQue, submitQue, clearQue, updateQue, newItem }: icreate) => {
-    if (nowQueId === 0) {
+const Create = ({ }) => {
+    const { state, dispatch } = useContext(totalContext);
+    const { data, que, nowQueId } = state;
+    let [title, changeTitle] = useState('');
+    let [deadline, changeDeadline] = useState('');
+    if (nowQueId === 0 || !filterData(data, nowQueId)) {
         return (
-            <div className='create'>
-                <div className='create-2'>
+            <div className='create1'>
+                <div className='create1-1'>
                     <p>点击按钮新建问卷</p>
-                    <input type="button" value="新建问卷" onClick={newItem} />
+                    <Button onClick={() => dispatch(newItem())}>新建问卷</Button>
                 </div>
             </div>
         )
     }
     return (
-        <div className="create">
-            <div className="create-1">
-                <div className="create-title"><input type="text" placeholder="问卷标题" onChange={saveTitle} /></div>
+        <div className="create2">
+            <div className="create2-1">
+                <div className="create-title"><Input type="text" placeholder="问卷标题" onChange={(event: React.ChangeEvent) => changeTitle((event.target as HTMLInputElement).value)} /></div>
                 <div className="queAll">
-                    <ul data-id={nowQueId}>
-                        {
-                            filterQue(que, nowQueId).map((item: que1, index: number) => (
+                    <List
+                        itemLayout='vertical'
+                        dataSource={filterQue(que, nowQueId)}
+                        renderItem={(item: singleQue, index: number) => (
+                            <List.Item>
                                 <Que
-                                    key={item.parId + '-' + index}
+                                    key={item.parId}
                                     index={index}
-                                    type={item.type}
-                                    parId={item.parId}
-                                    addQue={addQue}
-                                    removeQue={removeQue}
-                                    upQue={upQue}
-                                    downQue={downQue}
-                                    copyQue={copyQue}
                                     item={item}
-                                    updateQue={update(item.parId as number, index, updateQue)}
                                 />
-                            ))
-                        }
-                    </ul>
+                            </List.Item>
+                        )}
+                    ></List>
                 </div>
                 <div className="create-add">
-                    <ul>
-                        <li onClick={() => addQue('single', nowQueId)}>单选题</li>
-                        <li onClick={() => addQue('multi', nowQueId)}>多选题</li>
-                        <li onClick={() => addQue('word', nowQueId)}>文字题</li>
-                    </ul>
+                    <Button onClick={() => dispatch(addQue('single', nowQueId))}>单选题</Button>
+                    <Button onClick={() => dispatch(addQue('multi', nowQueId))}>多选题</Button>
+                    <Button onClick={() => dispatch(addQue('word', nowQueId))}>文字题</Button>
                 </div>
                 <div className="create-foot">
-                    <div className="calendar">问卷截止日期<input className="date" type="text" placeholder="点击出现日历" onFocus={showCal} onChange={saveDeadline} />
-                        <div className="calendarTable"></div>
-                    </div>
-                    <div>
-                        <input type="button" value="保存问卷" onClick={() => {
-                            saveQue(nowQueId, title, deadline);
-                            win.location.hash = '/list';
-                            clearQue();
-                        }} />
-                        <input type="button" value="发布问卷" onClick={() => {
-                            submitQue(nowQueId, title, deadline);
-                            win.location.hash = '/list';
-                            clearQue();
-                        }} />
-                    </div>
+                    <p>问卷截止时间：<DatePicker onChange={(date, dateString) => changeDeadline(dateString)}></DatePicker></p>
+                    <Button onClick={() => {
+                        const nowDate = new Date().getTime();
+                        if (!deadline) {
+                            message.error('必填项空缺');
+                        } else if (nowDate < Date.parse(deadline)) {
+                            dispatch(createItem(nowQueId, title, deadline));
+                            dispatch(saveQue(nowQueId));
+                            window.location.hash = '/list';
+                            dispatch(clearQue());
+                            message.success('保存成功');
+                        } else {
+                            message.error('截止时间小于当前时间');
+                        }
+                    }}>保存问卷</Button>
+                    <Button onClick={() => {
+                        const nowDate = new Date().getTime();
+                        if (!deadline) {
+                            message.error('必填项空缺');
+                        } else if (nowDate < Date.parse(deadline)) {
+                            dispatch(createItem(nowQueId, title, deadline));
+                            dispatch(submitQue(nowQueId));
+                            window.location.hash = '/list';
+                            dispatch(clearQue());
+                            message.success('保存成功');
+                        } else {
+                            message.error('截止时间小于当前时间');
+                        }
+                    }
+                    }>发布问卷</Button>
                 </div>
             </div>
         </div>
     )
 }
 
-const filterQue = (data: dataState, id: number) => {
-    let arr: any = [];
-    data.forEach((item: que1) => {
-        if (id !== null && item.parId === id) {
-            arr.push(item);
-        }
-    });
-    arr.sort((a: que1, b: que1) => {
-        return a.order! - b.order!;
-    })
-    return arr;
-}
-
-const showCal = () => {
-    var now = new Date();
-    var calen = new Calendar(now.getFullYear(), now.getMonth(), now.getDate());
-}
-
+/*
 const mapStateToProps = (state: state) => {
     return {
         que: state.que as [],
@@ -117,13 +114,8 @@ const mapStateToProps = (state: state) => {
     }
 }
 
-const update = (id: number, index: number, fn: Function) => {
-    return function (event?: Event) {
-        fn(id, index, (event?.target as HTMLInputElement).value);
-    }
-}
 
-const mapDispatchToProps = (dispatch:Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         addQue: (type: String, parentId: Number) => {
             dispatch(addQue(type, parentId))
@@ -161,5 +153,6 @@ const mapDispatchToProps = (dispatch:Dispatch) => {
         }
     }
 }
+*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(Create)
+export default Create;
